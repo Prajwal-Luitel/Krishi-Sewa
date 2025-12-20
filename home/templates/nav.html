@@ -1,0 +1,47 @@
+    <!-- Navbar -->
+     {% load static %}
+     
+     <link rel="stylesheet" href="{% static 'css/nav.css' %}">
+
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo">
+                <i class="fas fa-seedling"></i>
+            </div>
+            <div class="company-name">
+                <span class="top">Krishi</span>
+                <span class="bottom">Sewa</span>
+            </div>
+        </div>
+
+        <div class="nav-middle">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search for products...">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+        </div>
+
+        <div class="nav-right">
+            <div class="nav-links">
+                <a href="#" class="nav-item">Home</a>
+                <a href="#" class="nav-item">Products</a>
+                <a href="#" class="nav-item">Detect</a>
+            </div>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-icons">
+                <div class="icon-group">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-shopping-cart icon"></i>
+                        <span class="cart-badge">3</span>
+                    </div>
+                </div>
+                <div class="icon-group">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-user icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>

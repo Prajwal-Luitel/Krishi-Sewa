@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Detect - Krishi Sewa{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static '/css/detect.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+
+{% include 'nav.html' %}
+
+<section class="detect-page">
+        <!-- SUMMARY SECTION -->
+        <div class="summary-section">
+            <h2>Disease Summary</h2>
+
+            <div class="card">
+                <h3>Overview</h3>
+                <p>
+                    Plant diseases affect crop productivity and quality.
+                    Early detection using image-based analysis helps farmers
+                    take timely action and reduce losses.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Symptoms</h3>
+                <ul>
+                    <li>Leaf discoloration</li>
+                    <li>Spots or lesions on leaves</li>
+                    <li>Wilting or drying</li>
+                    <li>Abnormal growth patterns</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Prevention</h3>
+                <ul>
+                    <li>Use disease-free seeds</li>
+                    <li>Maintain proper irrigation</li>
+                    <li>Apply organic or chemical treatments</li>
+                    <li>Regular crop monitoring</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- DETECT SECTION -->
+        <div class="detect-section">
+            <h2>Detect Disease</h2>
+
+            <div class="upload-box">
+                <input type="file" id="imageInput" accept="image/*">
+                <label for="imageInput">Upload Leaf Image</label>
+            </div>
+
+            <div class="image-preview">
+                <img id="previewImage" alt="Image Preview">
+            </div>
+
+            <button id="detectBtn">Detect</button>
+
+            <div class="result" id="resultBox">
+                <img id="resultImage" alt="Predicted Result">
+                <h3 id="diseaseName"></h3>
+                <p id="confidenceScore"></p>
+            </div>
+        </div>
+
+    </section>
+
+    <script>
+        const imageInput = document.getElementById("imageInput");
+        const previewImage = document.getElementById("previewImage");
+        const detectBtn = document.getElementById("detectBtn");
+
+        const resultBox = document.getElementById("resultBox");
+        const resultImage = document.getElementById("resultImage");
+        const diseaseName = document.getElementById("diseaseName");
+        const confidenceScore = document.getElementById("confidenceScore");
+
+        let uploadedImageURL = "";
+
+        // Image preview
+        imageInput.addEventListener("change", function () {
+            const file = this.files[0];
+            if (file) {
+                uploadedImageURL = URL.createObjectURL(file);
+                previewImage.src = uploadedImageURL;
+                previewImage.style.display = "block";
+            }
+        });
+
+        // Detect button (mock prediction)
+        detectBtn.addEventListener("click", function () {
+            if (!uploadedImageURL) {
+                alert("Please upload an image first.");
+                return;
+            }
+
+            // Simulated ML result (replace with API response later)
+            const predictedDisease = "Leaf Blight";
+            const confidence = "92.4%";
+
+            resultImage.src = uploadedImageURL;
+            diseaseName.textContent = "Disease: " + predictedDisease;
+            confidenceScore.textContent = "Confidence Score: " + confidence;
+
+            resultBox.style.display = "block";
+        });
+
+    </script>
+
+{% endblock %}
