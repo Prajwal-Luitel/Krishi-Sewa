@@ -5,7 +5,7 @@
 {% block title %}Detect - Krishi Sewa{% endblock %}
 
 {% block css %}
-<link rel="stylesheet" href="{% static '/css/detect.css' %}">
+<link rel="stylesheet" href="{% static 'css/detect.css' %}">
 {% endblock %}
 
 
@@ -52,23 +52,34 @@
         <!-- DETECT SECTION -->
         <div class="detect-section">
             <h2>Detect Disease</h2>
+            <form id="detectForm" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="upload-box">
+                    <input type="file" id="imageInput" name="imageInput" accept="image/*" required>
+                    <label for="imageInput">Upload Leaf Image</label>
+                </div>
 
-            <div class="upload-box">
-                <input type="file" id="imageInput" accept="image/*">
-                <label for="imageInput">Upload Leaf Image</label>
-            </div>
+                <div class="image-preview">
+                    <img id="previewImage" src="{{ original_image }}" style="display: block;" >
+                </div>
 
-            <div class="image-preview">
-                <img id="previewImage" alt="Image Preview">
-            </div>
+                <button type="submit" id="detectBtn">Detect</button>
+            </form>
 
-            <button id="detectBtn">Detect</button>
-
+            {% if result_image %}
             <div class="result" id="resultBox">
-                <img id="resultImage" alt="Predicted Result">
-                <h3 id="diseaseName"></h3>
-                <p id="confidenceScore"></p>
+                <img id="resultImage" src="{{ result_image }}" alt="Detected Image">
+                {% if detections %}
+                    {% with detection=detections|first %}
+                    <h3 id="diseaseName">Disease: {{ detection.class }}</h3>
+                    <p id="confidenceScore">Confidence: {{ detection.confidence }}</p>
+                    {% endwith %}
+                {% else %}
+                    <h3 id="diseaseName">No disease detected</h3>
+                    <p id="confidenceScore"></p>
+                {% endif %}
             </div>
+            {% endif %}
         </div>
 
     </section>
@@ -76,41 +87,16 @@
     <script>
         const imageInput = document.getElementById("imageInput");
         const previewImage = document.getElementById("previewImage");
-        const detectBtn = document.getElementById("detectBtn");
-
-        const resultBox = document.getElementById("resultBox");
-        const resultImage = document.getElementById("resultImage");
-        const diseaseName = document.getElementById("diseaseName");
-        const confidenceScore = document.getElementById("confidenceScore");
-
-        let uploadedImageURL = "";
+        const form = document.getElementById("detectForm");
 
         // Image preview
         imageInput.addEventListener("change", function () {
             const file = this.files[0];
             if (file) {
-                uploadedImageURL = URL.createObjectURL(file);
+                const uploadedImageURL = URL.createObjectURL(file);
                 previewImage.src = uploadedImageURL;
                 previewImage.style.display = "block";
             }
-        });
-
-        // Detect button (mock prediction)
-        detectBtn.addEventListener("click", function () {
-            if (!uploadedImageURL) {
-                alert("Please upload an image first.");
-                return;
-            }
-
-            // Simulated ML result (replace with API response later)
-            const predictedDisease = "Leaf Blight";
-            const confidence = "92.4%";
-
-            resultImage.src = uploadedImageURL;
-            diseaseName.textContent = "Disease: " + predictedDisease;
-            confidenceScore.textContent = "Confidence Score: " + confidence;
-
-            resultBox.style.display = "block";
         });
 
     </script>

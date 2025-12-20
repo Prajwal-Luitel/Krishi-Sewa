@@ -97,7 +97,7 @@ button:hover {
 .result {
     margin-top: 20px;
     text-align: center;
-    display: none;
+    display: block; /* or none based on JS */
 }
 
 .result img {

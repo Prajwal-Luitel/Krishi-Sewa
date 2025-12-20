@@ -1,3 +1,6 @@
 __pycache__/
 *.pyc
 .env
+# Avoiding the model
+*.pt
+model/*
