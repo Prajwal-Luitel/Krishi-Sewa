@@ -5,8 +5,199 @@
 {% block title %}Register - Krishi Sewa{% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
 {% endblock %}
 
 {% block content %}
+
+<div class="register-container">
+    <div class="logo-section">
+        <div class="logo">
+            <img src="https://cdn-icons-png.flaticon.com/512/628/628283.png" alt="PlantCare Logo">
+        </div>
+        <h1>Create Account</h1>
+        <p>Join PlantCare Community</p>
+    </div>
+
+    <form id="registerForm" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" id="fullName" name="fullName" value="{{ old.fullName }}" ,
+                        placeholder="Enter your full name" required>
+                </div>
+                {% if errors.fullName %}
+                <div class="error-message">{{ errors.fullName }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-phone input-icon"></i>
+                    <input type="tel" id="phone" name="phone" value="{{ old.phone }}"
+                        placeholder="Enter your phone number" required>
+                </div>
+                {% if errors.phone %}
+                <div class="error-message">{{ errors.phone }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-venus-mars input-icon"></i>
+                    <select id="gender" name="gender" required>
+                        <option value="">Select Gender</option>
+
+                        <option value="male" {% if old.gender == "male" %}selected{% endif %}>
+                            Male
+                        </option>
+
+                        <option value="female" {% if old.gender == "female" %}selected{% endif %}>
+                            Female
+                        </option>
+
+                        <option value="other" {% if old.gender == "other" %}selected{% endif %}>
+                            Other
+                        </option>
+                    </select>
+
+
+
+
+                </div>
+                {% if errors.gender %}
+                <div class="error-message">{{ errors.gender }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="dob">Date of Birth</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-calendar input-icon"></i>
+                    <input type="date" id="dob" name="dob" value="{{ old.dob }}" required>
+                </div>
+                {% if errors.dob %}
+                <div class="error-message">{{ errors.dob }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" value="{{ old.email }}"
+                        required>
+                </div>
+                {% if errors.email %}
+                <div class="error-message">{{ errors.email }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="username">Username</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" value="{{ old.username }}"
+                        required>
+                </div>
+                {% if errors.username %}
+                <div class="error-message">{{ errors.username }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="password" name="password" placeholder="Create a password" required>
+                    <i class="fas fa-eye password-toggle" id="togglePassword"
+                        onclick="togglePassword('password', 'togglePassword')"></i>
+                </div>
+                {% if errors.password %}
+                <div class="error-message">{{ errors.password }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="confirmPassword" name="confirmPassword"
+                        placeholder="Confirm your password" required>
+                    <i class="fas fa-eye password-toggle" id="toggleConfirm"
+                        onclick="togglePassword('confirmPassword', 'toggleConfirm')"></i>
+                </div>
+                {% if errors.confirmPassword %}
+                <div class="error-message">{{ errors.confirmPassword }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <button type="submit" class="register-btn">Create Account</button>
+    </form>
+
+    <div class="divider">
+        <span>OR</span>
+    </div>
+
+    <div class="login-link">
+        Already have an account? <a href="{% url 'login' %}">Login</a>
+    </div>
+
+</div>
+
+<script>
+    // Profile picture preview
+    document.getElementById('profilePic').addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        const uploadSuccess = document.getElementById('uploadSuccess');
+
+        if (file) {
+            // Check file size (5MB max)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('File size must be less than 5MB');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                const preview = document.getElementById('profilePreview');
+                preview.innerHTML = `<img src="${event.target.result}" alt="Profile Preview">`;
+                uploadSuccess.classList.add('show');
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Toggle password visibility
+    function togglePassword(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+        const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+        input.setAttribute('type', type);
+
+        if (type === 'text') {
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+
+</script>
+
+
+
 {% endblock %}
