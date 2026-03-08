@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Products - Krishi Sewa</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      
+      :root {
+        --primary: #13ec13;
+        --primary-dark: #0ea00e;
+        --nav-bg: #064e3b;
+        --background-light: #f3fdf3;
+        --background-dark: #021202;
+        --surface-light: #ffffff;
+        --surface-dark: #0a260a;
+        --text-main: #0d1b0d;
+        --text-muted: #5c8a5c;
+        --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+        --shadow-glow: 0 0 15px rgba(19, 236, 19, 0.3);
+      }
+      
+      body {
+        font-family: 'Space Grotesk', sans-serif;
+        background-color: var(--background-light);
+        color: var(--text-main);
+        transition: background-color 0.2s, color 0.2s;
+        overflow-x: hidden;
+      }
+      
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #13ec13;
+      }
+      
+      /* Layout wrapper */
+      .page-wrapper {
+        position: relative;
+        display: flex;
+        min-height: 100vh;
+        width: 100%;
+        flex-direction: column;
+        overflow-x: hidden;
+      }
+      
+      /* ===================== HEADER ===================== */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        width: 100%;
+        border-bottom: 1px solid #065f46;
+        background: rgba(6, 78, 59, 0.95);
+        backdrop-filter: blur(12px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      }
+      
+      .header-inner {
+        margin: 0 auto;
+        display: flex;
+        height: 96px;
+        max-width: 1280px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 16px;
+      }
+      
+      @media (min-width: 640px) {
+        .header-inner {
+          padding: 0 24px;
+        }
+      }
+      @media (min-width: 1024px) {
+        .header-inner {
+          padding: 0 32px;
+        }
+      }
+      
+      /* Logo area */
+      .logo-area {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      
+      .logo-icon-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--primary);
+      }
+      
+      .logo-icon-wrap .material-symbols-outlined {
+        font-size: 30px;
+      }
+      
+      .logo-link {
+        display: flex;
+        flex-direction: column;
+        line-height: 1;
+        text-decoration: none;
+      }
+      
+      .logo-krishi {
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        color: #ffffff;
+      }
+      
+      .logo-sewa {
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        color: var(--primary);
+      }
+      
+      /* Search */
+      .search-wrap {
+        display: none;
+        flex: 1;
+        max-width: 512px;
+        margin: 0 48px;
+      }
+      
+      @media (min-width: 768px) {
+        .search-wrap {
+          display: flex;
+        }
+      }
+      
+      .search-inner {
+        position: relative;
+        width: 100%;
+      }
+      
+      .search-icon {
+        pointer-events: none;
+        position: absolute;
+        inset: 0 auto 0 0;
+        display: flex;
+        align-items: center;
+        padding-left: 16px;
+      }
+      
+      .search-icon .material-symbols-outlined {
+        color: #9ca3af;
+        font-size: 20px;
+        transition: color 0.2s;
+      }
+      
+      .search-input {
+        display: block;
+        width: 100%;
+        border-radius: 9999px;
+        border: 0;
+        background: #ffffff;
+        padding: 12px 16px 12px 48px;
+        color: #111827;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 14px;
+        line-height: 1.5;
+        outline: none;
+        transition: box-shadow 0.2s;
+      }
+      
+      .search-input::placeholder {
+        color: #9ca3af;
+      }
+      .search-input:focus {
+        box-shadow: 0 0 0 2px var(--primary), var(--shadow-glow);
+      }
+      
+      /* Header right */
+      .header-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      
+      @media (min-width: 640px) {
+        .header-right {
+          gap: 24px;
+        }
+      }
+      
+      /* Desktop nav */
+      .desktop-nav {
+        display: none;
+        align-items: center;
+        gap: 32px;
+      }
+      
+      @media (min-width: 768px) {
+        .desktop-nav {
+          display: flex;
+        }
+      }
+      
+      .nav-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        color: #e5e7eb;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      
+      .nav-link:hover {
+        color: var(--primary);
+      }
+      
+      .nav-link .material-symbols-outlined {
+        font-size: 30px;
+        transition: transform 0.2s;
+      }
+      
+      .nav-link:hover .material-symbols-outlined {
+        transform: scale(1.1);
+      }
+      
+      .nav-link span.nav-label {
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 0.025em;
+      }
+      
+      /* Active nav link */
+      .nav-link-active {
+        position: relative;
+        color: var(--primary);
+      }
+      
+      .nav-link-active .material-symbols-outlined {
+        filter: drop-shadow(0 0 8px rgba(19, 236, 19, 0.3));
+      }
+      
+      .nav-link-active span.nav-label {
+        font-weight: 700;
+      }
+      
+      .nav-active-bar {
+        position: absolute;
+        bottom: -8px;
+        height: 4px;
+        width: 24px;
+        border-radius: 9999px;
+        background: var(--primary);
+        box-shadow: var(--shadow-glow);
+      }
+      
+      /* Divider */
+      .header-divider {
+        display: none;
+        height: 32px;
+        width: 1px;
+        background: rgba(255, 255, 255, 0.2);
+        margin: 0 8px;
+      }
+      
+      @media (min-width: 768px) {
+        .header-divider {
+          display: block;
+        }
+      }
+      
+      /* Icon buttons */
+      .icon-btn-group {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      
+      .icon-btn {
+        position: relative;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+        color: #e5e7eb;
+        transition: color 0.2s;
+      }
+      
+      .icon-btn:hover {
+        color: var(--primary);
+      }
+      
+      .icon-btn .material-symbols-outlined {
+        font-size: 30px;
+        display: block;
+      }
+      
+      .cart-badge {
+        position: absolute;
+        top: -4px;
+        right: -4px;
+        display: flex;
+        height: 20px;
+        width: 20px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: var(--primary);
+        font-size: 11px;
+        font-weight: 700;
+        color: #000;
+        border: 2px solid var(--nav-bg);
+      }
+      
+      .cart-badge .material-symbols-outlined {
+        font-size: 12px;
+        font-weight: 700;
+      }
+      
+      /* Mobile menu btn */
+      .mobile-menu-btn {
+        display: flex;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+        color: #ffffff;
+      }
+      
+      .mobile-menu-btn .material-symbols-outlined {
+        font-size: 30px;
+      }
+      
+      @media (min-width: 768px) {
+        .mobile-menu-btn {
+          display: none;
+        }
+      }
+      
+      /* ===================== MAIN ===================== */
+      main {
+        flex-grow: 1;
+      }
+      
+      /* Hero section */
+      .hero-section {
+        background-color: #064e3b;
+        padding: 32px 0 48px;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+        border-bottom: 1px solid #065f46;
+      }
+      
+      .hero-inner {
+        margin: 0 auto;
+        max-width: 1280px;
+        padding: 0 16px;
+      }
+      
+      @media (min-width: 640px) {
+        .hero-inner {
+          padding: 0 24px;
+        }
+      }
+      @media (min-width: 1024px) {
+        .hero-inner {
+          padding: 0 32px;
+        }
+      }
+      
+      .hero-inner h1 {
+        font-size: 36px;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 8px;
+      }
+      
+      .hero-inner p {
+        color: #d1d5db;
+      }
+      
+      /* Products section */
+      .products-section {
+        padding: 48px 0;
+        background-color: var(--background-light);
+        min-height: 100vh;
+      }
+      
+      .products-inner {
+        margin: 0 auto;
+        max-width: 1280px;
+        padding: 0 16px;
+      }
+      
+      @media (min-width: 640px) {
+        .products-inner {
+          padding: 0 24px;
+        }
+      }
+      @media (min-width: 1024px) {
+        .products-inner {
+          padding: 0 32px;
+        }
+      }
+      
+      /* Flex layout for sidebar + grid */
+      .products-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+      }
+      
+      @media (min-width: 1024px) {
+        .products-layout {
+          flex-direction: row;
+        }
+      }
+      
+      /* ===================== SIDEBAR ===================== */
+      .sidebar {
+        width: 100%;
+        flex-shrink: 0;
+      }
+      
+      @media (min-width: 1024px) {
+        .sidebar {
+          width: 25%;
+        }
+      }
+      
+      .sidebar-sticky {
+        position: sticky;
+        top: 112px;
+      }
+      
+      .sidebar-card {
+        background: var(--surface-light);
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid #f3f4f6;
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+      }
+      
+      .sidebar-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #f3f4f6;
+        padding-bottom: 16px;
+      }
+      
+      .sidebar-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--text-main);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      
+      .sidebar-title .material-symbols-outlined {
+        font-size: 20px;
+      }
+      
+      .clear-btn {
+        font-size: 12px;
+        color: var(--primary);
+        font-weight: 600;
+        background: none;
+        border: none;
+        cursor: pointer;
+      }
+      
+      .clear-btn:hover {
+        color: var(--primary-dark);
+      }
+      
+      /* Filter sections */
+      .filter-section {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      
+      .filter-heading {
+        font-size: 12px;
+        font-weight: 700;
+        color: #111827;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      
+      /* Sort options */
+      .sort-options {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      
+      .sort-label {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+      }
+      
+      .sort-label input[type='radio'] {
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        border: 1px solid #d1d5db;
+        accent-color: var(--primary);
+        background: #f9fafb;
+        cursor: pointer;
+      }
+      
+      .sort-label-content {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 14px;
+        color: #4b5563;
+        transition: color 0.2s;
+      }
+      
+      .sort-label:hover .sort-label-content {
+        color: var(--primary);
+      }
+      
+      .sort-label-content .material-symbols-outlined {
+        font-size: 16px;
+      }
+      
+      /* Category options */
+      .category-options {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      
+      .category-label {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+      }
+      
+      .category-label input[type='checkbox'] {
+        height: 20px;
+        width: 20px;
+        border-radius: 4px;
+        border: 1px solid #d1d5db;
+        accent-color: var(--primary);
+        background: #f9fafb;
+        cursor: pointer;
+      }
+      
+      .category-label span {
+        font-size: 14px;
+        color: #4b5563;
+        transition: color 0.2s;
+      }
+      
+      .category-label:hover span {
+        color: var(--primary);
+      }
+      
+      /* Price range */
+      .price-range-section {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      
+      .price-inputs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      
+      .price-input-group label {
+        display: block;
+        font-size: 12px;
+        color: #6b7280;
+        margin-bottom: 4px;
+      }
+      
+      .price-input-wrap {
+        position: relative;
+      }
+      
+      .price-prefix {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 14px;
+        color: #6b7280;
+      }
+      
+      .price-input {
+        width: 100%;
+        border-radius: 8px;
+        border: 1px solid #e5e7eb;
+        background: #f9fafb;
+        padding: 8px 8px 8px 32px;
+        font-size: 14px;
+        font-family: 'Space Grotesk', sans-serif;
+        outline: none;
+        color: var(--text-main);
+        transition: border-color 0.2s, box-shadow 0.2s;
+      }
+      
+      .price-input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(19, 236, 19, 0.2);
+      }
+      
+      .apply-btn {
+        width: 100%;
+        border-radius: 12px;
+        background: #111827;
+        color: #ffffff;
+        padding: 12px;
+        font-size: 14px;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        font-family: 'Space Grotesk', sans-serif;
+        transition: background-color 0.2s, color 0.2s;
+      }
+      
+      .apply-btn:hover {
+        background: var(--primary);
+        color: #000000;
+      }
+      
+      /* ===================== PRODUCT GRID ===================== */
+      .products-main {
+        flex: 1;
+      }
+      
+      .products-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 24px;
+      }
+      
+      .products-count {
+        font-size: 14px;
+        color: #6b7280;
+      }
+      
+      .products-count strong {
+        font-weight: 700;
+        color: var(--text-main);
+      }
+      
+      .mobile-filter-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border-radius: 8px;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        padding: 8px 16px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #374151;
+        cursor: pointer;
+        font-family: 'Space Grotesk', sans-serif;
+      }
+      
+      .mobile-filter-btn .material-symbols-outlined {
+        font-size: 18px;
+      }
+      
+      @media (min-width: 1024px) {
+        .mobile-filter-btn {
+          display: none;
+        }
+      }
+      
+      /* Product grid */
+      .product-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 40px 24px;
+      }
+      
+      @media (min-width: 640px) {
+        .product-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      
+      @media (min-width: 1024px) {
+        .product-grid {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 40px 32px;
+        }
+      }
+      
+      /* Product card */
+      .product-card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        border-radius: 16px;
+        background: var(--surface-light);
+        box-shadow: var(--shadow-soft);
+        border: 1px solid #f3f4f6;
+        transition: box-shadow 0.3s;
+      }
+      
+      .product-card:hover {
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+      
+      .product-image-wrap {
+        position: relative;
+        width: 100%;
+        padding-top: 100%; /* aspect-square */
+        background: #f3f4f6;
+        overflow: hidden;
+      }
+      
+      .product-image-wrap img {
+        position: absolute;
+        inset: 0;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+        transition: transform 0.5s;
+      }
+      
+      .product-card:hover .product-image-wrap img {
+        transform: scale(1.1);
+      }
+      
+      /* Discount badge */
+      .discount-badge {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: #ef4444;
+        color: #ffffff;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 700;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+      }
+      
+      /* Product body */
+      .product-body {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        padding: 20px;
+      }
+      
+      .product-seller {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+      }
+      
+      .seller-icon-wrap {
+        height: 24px;
+        width: 24px;
+        border-radius: 50%;
+        background: #f3f4f6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #e5e7eb;
+      }
+      
+      .seller-icon-wrap .material-symbols-outlined {
+        font-size: 12px;
+        color: #6b7280;
+      }
+      
+      .seller-name {
+        font-size: 12px;
+        color: #6b7280;
+        font-weight: 500;
+      }
+      
+      .product-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--text-main);
+        margin-bottom: 4px;
+      }
+      
+      .product-title a {
+        color: inherit;
+        text-decoration: none;
+      }
+      
+      /* Stretch anchor to fill card */
+      .product-title a::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+      }
+      
+      .product-subtitle {
+        font-size: 14px;
+        color: var(--text-muted);
+      }
+      
+      .product-footer {
+        margin-top: auto;
+        padding-top: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      
+      .price-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      
+      .product-price {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--primary);
+      }
+      
+      .product-price-old {
+        font-size: 12px;
+        color: #9ca3af;
+        text-decoration: line-through;
+      }
+      
+      /* Product actions */
+      .product-actions {
+        display: flex;
+        gap: 8px;
+        position: relative;
+        z-index: 10;
+      }
+      
+      .btn-details {
+        flex: 1;
+        border-radius: 12px;
+        background: #f3f4f6;
+        color: var(--text-main);
+        border: 1px solid #e5e7eb;
+        padding: 10px;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: 'Space Grotesk', sans-serif;
+        transition: background-color 0.2s;
+      }
+      
+      .btn-details:hover {
+        background: #e5e7eb;
+      }
+      
+      .btn-cart {
+        height: 40px;
+        width: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        background: var(--primary);
+        color: #000000;
+        border: none;
+        cursor: pointer;
+        box-shadow: var(--shadow-glow);
+        transition: background-color 0.2s;
+      }
+      
+      .btn-cart:hover {
+        background: var(--primary-dark);
+      }
+      
+      .btn-cart .material-symbols-outlined {
+        font-size: 20px;
+      }
+      
+      /* ===================== FOOTER ===================== */
+      footer {
+        background-color: #021202;
+        color: #ffffff;
+        padding: 80px 0 40px;
+        border-top: 1px solid #1a3b1a;
+      }
+      
+      .footer-inner {
+        margin: 0 auto;
+        max-width: 1280px;
+        padding: 0 16px;
+      }
+      
+      @media (min-width: 640px) {
+        .footer-inner {
+          padding: 0 24px;
+        }
+      }
+      @media (min-width: 1024px) {
+        .footer-inner {
+          padding: 0 32px;
+        }
+      }
+      
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 48px;
+        margin-bottom: 64px;
+      }
+      
+      @media (min-width: 768px) {
+        .footer-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      
+      /* Footer brand */
+      .footer-brand {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+      
+      .footer-logo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      
+      .footer-logo .material-symbols-outlined {
+        font-size: 30px;
+        color: var(--primary);
+      }
+      
+      .footer-logo-text {
+        display: flex;
+        align-items: center;
+      }
+      
+      .footer-logo-krishi {
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        color: #ffffff;
+        margin-right: 4px;
+      }
+      
+      .footer-logo-sewa {
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        color: var(--primary);
+      }
+      
+      .footer-tagline {
+        font-size: 14px;
+        color: #9ca3af;
+        line-height: 1.6;
+      }
+      
+      /* Social links */
+      .social-links {
+        display: flex;
+        gap: 16px;
+      }
+      
+      .social-link {
+        height: 40px;
+        width: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+        text-decoration: none;
+        transition: background-color 0.2s, color 0.2s;
+      }
+      
+      .social-link:hover {
+        background: var(--primary);
+        color: #000000;
+      }
+      
+      .social-link svg {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
+      }
+      
+      /* Footer links */
+      .footer-links-section h3,
+      .footer-contact-section h3 {
+        font-size: 18px;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 24px;
+      }
+      
+      .footer-links-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px 16px;
+        list-style: none;
+      }
+      
+      .footer-links-grid li a {
+        font-size: 14px;
+        color: #9ca3af;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      
+      .footer-links-grid li a:hover {
+        color: var(--primary);
+      }
+      
+      /* Contact */
+      .contact-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      
+      .contact-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      
+      .contact-item .material-symbols-outlined {
+        color: #ffffff;
+        margin-top: 2px;
+        font-size: 20px;
+      }
+      
+      .contact-item span.contact-text {
+        font-size: 14px;
+        color: #9ca3af;
+      }
+      
+      .contact-item.center-item {
+        align-items: center;
+      }
+      
+      /* Footer bottom */
+      .footer-bottom {
+        border-top: 1px solid #1a3b1a;
+        padding-top: 32px;
+        text-align: center;
+      }
+      
+      .footer-bottom p {
+        font-size: 14px;
+        color: #6b7280;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <!-- HEADER -->
+      <header>
+        <div class="header-inner">
+          <!-- Logo -->
+          <div class="logo-area">
+            <div class="logo-icon-wrap">
+              <span class="material-symbols-outlined">agriculture</span>
+            </div>
+            <a class="logo-link" href="#">
+              <span class="logo-krishi">Krishi</span>
+              <span class="logo-sewa">Sewa</span>
+            </a>
+          </div>
+
+          <!-- Search -->
+          <div class="search-wrap">
+            <div class="search-inner">
+              <div class="search-icon">
+                <span class="material-symbols-outlined">search</span>
+              </div>
+              <input class="search-input" placeholder="Search for seeds, tools, or diseases..." type="text" />
+            </div>
+          </div>
+
+          <!-- Right side -->
+          <div class="header-right">
+            <nav class="desktop-nav">
+              <a class="nav-link" href="#">
+                <span class="material-symbols-outlined">home</span>
+                <span class="nav-label">Home</span>
+              </a>
+              <a class="nav-link nav-link-active" href="#">
+                <span class="material-symbols-outlined">potted_plant</span>
+                <span class="nav-label">Product</span>
+                <span class="nav-active-bar"></span>
+              </a>
+              <a class="nav-link" href="#">
+                <span class="material-symbols-outlined">document_scanner</span>
+                <span class="nav-label">Detect</span>
+              </a>
+            </nav>
+
+            <div class="header-divider"></div>
+
+            <div class="icon-btn-group">
+              <button aria-label="Cart" class="icon-btn">
+                <span class="material-symbols-outlined">shopping_cart</span>
+                <span class="cart-badge"><span class="material-symbols-outlined">add</span></span>
+              </button>
+              <button aria-label="Profile" class="icon-btn"><span class="material-symbols-outlined">account_circle</span></button>
+            </div>
+
+            <button class="mobile-menu-btn"><span class="material-symbols-outlined">menu</span></button>
+          </div>
+        </div>
+      </header>
+
+      <!-- MAIN -->
+      <main>
+        <!-- Hero -->
+        <section class="hero-section">
+          <div class="hero-inner">
+            <h1>Agricultural Products</h1>
+            <p>Quality seeds, tools, and fertilizers for modern farming.</p>
+          </div>
+        </section>
+
+        <!-- Products -->
+        <section class="products-section">
+          <div class="products-inner">
+            <div class="products-layout">
+              <!-- Sidebar -->
+              <aside class="sidebar">
+                <div class="sidebar-sticky">
+                  <div class="sidebar-card">
+                    <!-- Header -->
+                    <div class="sidebar-header">
+                      <h2 class="sidebar-title"><span class="material-symbols-outlined">filter_list</span> Filters</h2>
+                      <button class="clear-btn">Clear All</button>
+                    </div>
+
+                    <!-- Sort By -->
+                    <div class="filter-section">
+                      <h3 class="filter-heading">Sort By</h3>
+                      <div class="sort-options">
+                        <label class="sort-label">
+                          <input checked name="sort_by" type="radio" />
+                          <div class="sort-label-content">
+                            <span>Price</span>
+                            <span class="material-symbols-outlined">arrow_upward</span>
+                          </div>
+                        </label>
+                        <label class="sort-label">
+                          <input name="sort_by" type="radio" />
+                          <div class="sort-label-content">
+                            <span>Price</span>
+                            <span class="material-symbols-outlined">arrow_downward</span>
+                          </div>
+                        </label>
+                      </div>
+                    </div>
+
+                    <!-- Categories -->
+                    <div class="filter-section">
+                      <h3 class="filter-heading">Categories</h3>
+                      <div class="category-options">
+                        <label class="category-label">
+                          <input type="checkbox" />
+                          <span>Seeds &amp; Saplings</span>
+                        </label>
+                        <label class="category-label">
+                          <input type="checkbox" />
+                          <span>Fertilizers</span>
+                        </label>
+                        <label class="category-label">
+                          <input type="checkbox" />
+                          <span>Farm Tools</span>
+                        </label>
+                        <label class="category-label">
+                          <input type="checkbox" />
+                          <span>Pest Control</span>
+                        </label>
+                        <label class="category-label">
+                          <input type="checkbox" />
+                          <span>Machinery</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <!-- Price Range -->
+                    <div class="price-range-section">
+                      <h3 class="filter-heading">Price Range</h3>
+                      <div class="price-inputs">
+                        <div class="price-input-group">
+                          <label>Min</label>
+                          <div class="price-input-wrap">
+                            <span class="price-prefix">Rs.</span>
+                            <input class="price-input" placeholder="0" type="number" />
+                          </div>
+                        </div>
+                        <div class="price-input-group">
+                          <label>Max</label>
+                          <div class="price-input-wrap">
+                            <span class="price-prefix">Rs.</span>
+                            <input class="price-input" placeholder="1000" type="number" />
+                          </div>
+                        </div>
+                      </div>
+                      <button class="apply-btn">Apply Filter</button>
+                    </div>
+                  </div>
+                </div>
+              </aside>
+
+              <!-- Products Main -->
+              <div class="products-main">
+                <!-- Toolbar -->
+                <div class="products-toolbar">
+                  <p class="products-count">
+                    Showing <strong>8</strong> products
+                  </p>
+                  <div>
+                    <button class="mobile-filter-btn"><span class="material-symbols-outlined">filter_list</span> Filters</button>
+                  </div>
+                </div>
+
+                <!-- Grid -->
+                <div class="product-grid">
+                  <!-- Card : Dynamic product -->
+                  {% for product in products %}
+                    <div class="product-card">
+                      <div class="product-image-wrap">
+                        {% if product.image %}
+                          <img src="{{ product.image.url }}" alt="{{ product.name }}" />
+                        {% else %}
+                          <img src="https://via.placeholder.com/300x200" alt="No image available" />
+                        {% endif %}
+                      </div>
+
+                      <div class="product-body">
+                        <div class="product-seller">
+                          <div class="seller-icon-wrap">
+                            <span class="material-symbols-outlined">store</span>
+                          </div>
+                          <span class="seller-name">{{ product.brand }}</span>
+                        </div>
+
+                        <h3 class="product-title"><a href="#">{{ product.name }}</a></h3>
+
+                        <p class="product-subtitle">{{ product.description|truncatewords:10 }}</p>
+
+                        <div class="product-footer">
+                          <div class="price-row">
+                            <p class="product-price">Rs. {{ product.selling_price }}</p>
+                          </div>
+
+                          <div class="product-actions">
+                            <button class="btn-details">View Details</button>
+
+                            <button class="btn-cart"><span class="material-symbols-outlined">add_shopping_cart</span></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {% empty %}
+                    <p>No products available.</p>
+                  {% endfor %}
+
+                  <!-- Card 1: Organic Fertilizer -->
+                  <div class="product-card">
+                    <div class="product-image-wrap">
+                      <img alt="Bag of organic plant fertilizer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWyUYysfBv1OR7Bw4sXMirXP9dZBuoHFGwWvm0RZrKJeZYl9LFrkpRmHt9qfDv348T9Aa5__td_HDtoqYGcy9nix82weDwecixWWcGmgL6X9IZIV1pHiIE0WWCMsQCcnNBBrVSZXBe-grCWbIc5Vzt5a2dJvFNQW_kaFU3_TPP0Zkf74FMSKoX-vvuKKlREHsCmDJsFs-BAjMv-0y5KUlv-fajAwcU8GOqYQGJKYLTxsF88BeAoY8gw0EfDdwl9P-ZtXKNHBJvIoU" />
+                    </div>
+                    <div class="product-body">
+                      <div class="product-seller">
+                        <div class="seller-icon-wrap">
+                          <span class="material-symbols-outlined">store</span>
+                        </div>
+                        <span class="seller-name">AgroSupply</span>
+                      </div>
+                      <h3 class="product-title"><a href="#">Organic Fertilizer</a></h3>
+                      <p class="product-subtitle">Enhance soil health</p>
+                      <div class="product-footer">
+                        <div class="price-row">
+                          <p class="product-price">Rs. 20.00</p>
+                        </div>
+                        <div class="product-actions">
+                          <button class="btn-details">View Details</button>
+                          <button class="btn-cart"><span class="material-symbols-outlined">add_shopping_cart</span></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Card 2: Tomato Seeds -->
+                  <div class="product-card">
+                    <div class="product-image-wrap">
+                      <img alt="Packet of hybrid tomato seeds" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGBoRTQOnXwdDJRFwNMQhuOQswBLbvOOvR_KDDXF3NjEKArmLP_49bSlJH3rl3tOlOdkHI9HwP0dvjwCUgvQ5lFbva0NdysMzZvaag8V2Ww96wb81amv7amxjiar0iQ633d23zzK7FaMamN8_-T6BukIatqbqXYEc5jTj8zSPF0NeCJanhUOPmWf0PJR1cohIBBolEy9eLd8IISm-reFaXqBZx3QNDBbhtrTVVxopZr2J6w4YhBFHuyO5iTYx9OxL_bDdx8iY0gJU" />
+                    </div>
+                    <div class="product-body">
+                      <div class="product-seller">
+                        <div class="seller-icon-wrap">
+                          <span class="material-symbols-outlined">store</span>
+                        </div>
+                        <span class="seller-name">GreenSeeds</span>
+                      </div>
+                      <h3 class="product-title"><a href="#">Tomato Seeds</a></h3>
+                      <p class="product-subtitle">High yield variety</p>
+                      <div class="product-footer">
+                        <div class="price-row">
+                          <p class="product-price">Rs. 5.00</p>
+                        </div>
+                        <div class="product-actions">
+                          <button class="btn-details">View Details</button>
+                          <button class="btn-cart"><span class="material-symbols-outlined">add_shopping_cart</span></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Card 3: Eco Pest Spray -->
+                  <div class="product-card">
+                    <div class="product-image-wrap">
+                      <img alt="Bottle of eco-friendly pest control spray" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAP0sJvd6Njx_wGFEqSyymrHUZiIzEuFDGEyE-NLLJn-Zz699bAmUou-Io6ui7v_cF1zP7p88-Wd5279BZLfbT4-HqRDWqLNCqiOcp6D4z3FpSwkPM5SM_0S9thd7m_1D1un6fPr_vLYOlgpVAWh4rFVjNOUAUDNKnizypSDzBma6wtBvizbmdmncKb-KwrvVJHd815SwRhdQL0kNtB_4hdwUMy2ShH5nlt4O9IvATwwU1KTsAJkGs7-IkK8EiwHkDct5qxYU3B7L0" />
+                    </div>
+                    <div class="product-body">
+                      <div class="product-seller">
+                        <div class="seller-icon-wrap">
+                          <span class="material-symbols-outlined">store</span>
+                        </div>
+                        <span class="seller-name">EcoGuard</span>
+                      </div>
+                      <h3 class="product-title"><a href="#">Eco Pest Spray</a></h3>
+                      <p class="product-subtitle">Safe for pets</p>
+                      <div class="product-footer">
+                        <div class="price-row">
+                          <p class="product-price">Rs. 15.00</p>
+                        </div>
+                        <div class="product-actions">
+                          <button class="btn-details">View Details</button>
+                          <button class="btn-cart"><span class="material-symbols-outlined">add_shopping_cart</span></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Card 4: Pro Tool Set -->
+                  <div class="product-card">
+                    <div class="product-image-wrap">
+                      <img alt="Set of gardening hand tools on soil" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAi3Z3guyT7ZNKkcciZQel04HX7XVCRzWPccp0-0sfg0GiQCli16llXm-F2dGcy7w8P2WZeL17XUVnzbbsb4bz_oyZjnVVLgpwv_FDe8lGYvU56_gxhcVG88kTiR0pEqxpnGFdv3ynb7bRPGVGsi7L2t0QLzHpGvYYgrzZp4AULQaUdwnBz4TiNZpVZOmcbFcIVXtlch23vdNLBv44F1NDC3SfKRVeNXO7NoTFwnuaAa2J_gxM0660SKt7CAdzlsqMbi1jyLGiIDNs" />
+                    </div>
+                    <div class="product-body">
+                      <div class="product-seller">
+                        <div class="seller-icon-wrap">
+                          <span class="material-symbols-outlined">store</span>
+                        </div>
+                        <span class="seller-name">ProTools</span>
+                      </div>
+                      <h3 class="product-title"><a href="#">Pro Tool Set</a></h3>
+                      <p class="product-subtitle">Stainless steel</p>
+                      <div class="product-footer">
+                        <div class="price-row">
+                          <p class="product-price">Rs. 35.00</p>
+                        </div>
+                        <div class="product-actions">
+                          <button class="btn-details">View Details</button>
+                          <button class="btn-cart"><span class="material-symbols-outlined">add_shopping_cart</span></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Card 5: Premium Compost (with discount) -->
+                  <div class="product-card">
+                    <div class="product-image-wrap">
+                      <img alt="Organic compost" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWyUYysfBv1OR7Bw4sXMirXP9dZBuoHFGwWvm0RZrKJeZYl9LFrkpRmHt9qfDv348T9Aa5__td_HDtoqYGcy9nix82weDwecixWWcGmgL6X9IZIV1pHiIE0WWCMsQCcnNBBrVSZXBe-grCWbIc5Vzt5a2dJvFNQW_kaFU3_TPP0Zkf74FMSKoX-vvuKKlREHsCmDJsFs-BAjMv-0y5KUlv-fajAwcU8GOqYQGJKYLTxsF88BeAoY8gw0EfDdwl9P-ZtXKNHBJvIoU" />
+                      <div class="discount-badge">-10%</div>
+                    </div>
+                    <div class="product-body">
+                      <div class="product-seller">
+                        <div class="seller-icon-wrap">
+                          <span class="material-symbols-outlined">store</span>
+                        </div>
+                        <span class="seller-name">NatureFirst</span>
+                      </div>
+                      <h3 class="product-title"><a href="#">Premium Compost</a></h3>
+                      <p class="product-subtitle">Nutrient rich</p>
+                      <div class="product-footer">
+                        <div class="price-row">
+                          <div>
+                            <p class="product-price">Rs. 18.00</p>
+                            <p class="product-price-old">Rs. 20.00</p>
+                          </div>
+                        </div>
+                        <div class="product-actions">
+                          <button class="btn-details">View Details</button>
+                          <button class="btn-cart"><span class="material-symbols-outlined">add_shopping_cart</span></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Card 6: Cucumber Seeds -->
+                  <div class="product-card">
+                    <div class="product-image-wrap">
+                      <img alt="Cucumber seeds packet" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGBoRTQOnXwdDJRFwNMQhuOQswBLbvOOvR_KDDXF3NjEKArmLP_49bSlJH3rl3tOlOdkHI9HwP0dvjwCUgvQ5lFbva0NdysMzZvaag8V2Ww96wb81amv7amxjiar0iQ633d23zzK7FaMamN8_-T6BukIatqbqXYEc5jTj8zSPF0NeCJanhUOPmWf0PJR1cohIBBolEy9eLd8IISm-reFaXqBZx3QNDBbhtrTVVxopZr2J6w4YhBFHuyO5iTYx9OxL_bDdx8iY0gJU" />
+                    </div>
+                    <div class="product-body">
+                      <div class="product-seller">
+                        <div class="seller-icon-wrap">
+                          <span class="material-symbols-outlined">store</span>
+                        </div>
+                        <span class="seller-name">GreenSeeds</span>
+                      </div>
+                      <h3 class="product-title"><a href="#">Cucumber Seeds</a></h3>
+                      <p class="product-subtitle">Fast growing</p>
+                      <div class="product-footer">
+                        <div class="price-row">
+                          <p class="product-price">Rs. 6.00</p>
+                        </div>
+                        <div class="product-actions">
+                          <button class="btn-details">View Details</button>
+                          <button class="btn-cart"><span class="material-symbols-outlined">add_shopping_cart</span></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Card 7: Neem Oil Spray -->
+                  <div class="product-card">
+                    <div class="product-image-wrap">
+                      <img alt="Neem oil spray" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAP0sJvd6Njx_wGFEqSyymrHUZiIzEuFDGEyE-NLLJn-Zz699bAmUou-Io6ui7v_cF1zP7p88-Wd5279BZLfbT4-HqRDWqLNCqiOcp6D4z3FpSwkPM5SM_0S9thd7m_1D1un6fPr_vLYOlgpVAWh4rFVjNOUAUDNKnizypSDzBma6wtBvizbmdmncKb-KwrvVJHd815SwRhdQL0kNtB_4hdwUMy2ShH5nlt4O9IvATwwU1KTsAJkGs7-IkK8EiwHkDct5qxYU3B7L0" />
+                    </div>
+                    <div class="product-body">
+                      <div class="product-seller">
+                        <div class="seller-icon-wrap">
+                          <span class="material-symbols-outlined">store</span>
+                        </div>
+                        <span class="seller-name">EcoGuard</span>
+                      </div>
+                      <h3 class="product-title"><a href="#">Neem Oil Spray</a></h3>
+                      <p class="product-subtitle">Organic solution</p>
+                      <div class="product-footer">
+                        <div class="price-row">
+                          <p class="product-price">Rs. 12.00</p>
+                        </div>
+                        <div class="product-actions">
+                          <button class="btn-details">View Details</button>
+                          <button class="btn-cart"><span class="material-symbols-outlined">add_shopping_cart</span></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Card 8: Garden Trowel -->
+                  <div class="product-card">
+                    <div class="product-image-wrap">
+                      <img alt="Gardening trowel" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAi3Z3guyT7ZNKkcciZQel04HX7XVCRzWPccp0-0sfg0GiQCli16llXm-F2dGcy7w8P2WZeL17XUVnzbbsb4bz_oyZjnVVLgpwv_FDe8lGYvU56_gxhcVG88kTiR0pEqxpnGFdv3ynb7bRPGVGsi7L2t0QLzHpGvYYgrzZp4AULQaUdwnBz4TiNZpVZOmcbFcIVXtlch23vdNLBv44F1NDC3SfKRVeNXO7NoTFwnuaAa2J_gxM0660SKt7CAdzlsqMbi1jyLGiIDNs" />
+                    </div>
+                    <div class="product-body">
+                      <div class="product-seller">
+                        <div class="seller-icon-wrap">
+                          <span class="material-symbols-outlined">store</span>
+                        </div>
+                        <span class="seller-name">ProTools</span>
+                      </div>
+                      <h3 class="product-title"><a href="#">Garden Trowel</a></h3>
+                      <p class="product-subtitle">Ergonomic grip</p>
+                      <div class="product-footer">
+                        <div class="price-row">
+                          <p class="product-price">Rs. 10.00</p>
+                        </div>
+                        <div class="product-actions">
+                          <button class="btn-details">View Details</button>
+                          <button class="btn-cart"><span class="material-symbols-outlined">add_shopping_cart</span></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- end product-grid -->
+              </div>
+              <!-- end products-main -->
+            </div>
+            <!-- end products-layout -->
+          </div>
+          <!-- end products-inner -->
+        </section>
+      </main>
+
+      <!-- FOOTER -->
+      <footer>
+        <div class="footer-inner">
+          <div class="footer-grid">
+            <!-- Brand -->
+            <div class="footer-brand">
+              <div class="footer-logo">
+                <span class="material-symbols-outlined">agriculture</span>
+                <div class="footer-logo-text">
+                  <span class="footer-logo-krishi">Krishi</span>
+                  <span class="footer-logo-sewa">Sewa</span>
+                </div>
+              </div>
+              <p class="footer-tagline">Connecting farmers with the future of agriculture. Smart solutions for better yields, healthier crops, and a sustainable tomorrow.</p>
+              <div class="social-links">
+                <!-- Facebook -->
+                <a class="social-link" href="#">
+                  <svg aria-hidden="true" viewBox="0 0 24 24">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                  </svg>
+                </a>
+                <!-- Instagram -->
+                <a class="social-link" href="#">
+                  <svg aria-hidden="true" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.36-.2 6.78-2.618 6.98-6.98.058-1.28.072-1.689.072-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                  </svg>
+                </a>
+                <!-- LinkedIn -->
+                <a class="social-link" href="#">
+                  <svg aria-hidden="true" viewBox="0 0 24 24">
+                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                  </svg>
+                </a>
+                <!-- X / Twitter -->
+                <a class="social-link" href="#">
+                  <svg aria-hidden="true" viewBox="0 0 24 24">
+                    <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-links-section">
+              <h3>Quick Links</h3>
+              <ul class="footer-links-grid">
+                <li>
+                  <a href="#">About</a>
+                </li>
+                <li>
+                  <a href="#">Contact</a>
+                </li>
+                <li>
+                  <a href="#">Home</a>
+                </li>
+                <li>
+                  <a href="#">Product</a>
+                </li>
+                <li>
+                  <a href="#detect">Detect</a>
+                </li>
+                <li>
+                  <a href="#">Detect History</a>
+                </li>
+                <li>
+                  <a href="#">Cart</a>
+                </li>
+                <li>
+                  <a href="#">Purchase History</a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Contact -->
+            <div class="footer-contact-section">
+              <h3>Contact Information</h3>
+              <ul class="contact-list">
+                <li class="contact-item">
+                  <span class="material-symbols-outlined">location_on</span>
+                  <span class="contact-text">Nepal, Durbarmarg</span>
+                </li>
+                <li class="contact-item center-item">
+                  <span class="material-symbols-outlined">call</span>
+                  <span class="contact-text">+977 9812345678</span>
+                </li>
+                <li class="contact-item center-item">
+                  <span class="material-symbols-outlined">email</span>
+                  <span class="contact-text">support@krishisewa.com</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- end footer-grid -->
+
+          <div class="footer-bottom">
+            <p>© 2024 Krishi Sewa Inc. All Rights Reserved.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <!-- end page-wrapper -->
+  </body>
+</html>

@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Krishi Sewa Product Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+      /* Reset and Base Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      :root {
+        --primary: #11d411;
+        --primary-dark: #0ea30e;
+        --background-light: #f6f8f6;
+        --background-dark: #102210;
+        --surface-light: #ffffff;
+        --surface-dark: #162e16;
+        --text-main: #0d1b0d;
+        --text-muted: #4c9a4c;
+        --gray-100: #f3f4f6;
+        --gray-200: #e5e7eb;
+        --gray-300: #d1d5db;
+        --gray-400: #9ca3af;
+        --gray-500: #6b7280;
+        --gray-600: #4b5563;
+        --gray-700: #374151;
+        --gray-800: #1f2937;
+        --green-100: #d1fae5;
+        --green-400: #34d399;
+        --green-800: #065f46;
+        --green-900: #064e3b;
+        --orange-100: #ffedd5;
+        --orange-400: #fb923c;
+        --orange-800: #9a3412;
+        --orange-900: #7c2d12;
+        --red-100: #fee2e2;
+        --red-400: #f87171;
+        --red-600: #dc2626;
+        --red-800: #991b1b;
+        --red-900: #7f1d1d;
+        --blue-600: #2563eb;
+        --blue-900: #1e3a8a;
+        --white: #ffffff;
+        --black: #000000;
+      }
+      
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--background-light);
+        color: var(--text-main);
+        overflow: hidden;
+        height: 100vh;
+      }
+      
+      body.dark {
+        background-color: var(--background-dark);
+        color: #f3f4f6;
+      }
+      
+      /* Scrollbar Styling */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 3px;
+      }
+      
+      .dark ::-webkit-scrollbar-thumb {
+        background: #334155;
+      }
+      
+      /* Layout */
+      .container {
+        display: flex;
+        height: 100vh;
+        width: 100%;
+        overflow: hidden;
+      }
+      
+      /* Sidebar */
+      .sidebar {
+        display: none;
+        flex-direction: column;
+        width: 16rem;
+        height: 100%;
+        background-color: var(--surface-light);
+        border-right: 1px solid var(--gray-200);
+      }
+      
+      .dark .sidebar {
+        background-color: var(--surface-dark);
+        border-right: 1px solid var(--gray-800);
+      }
+      
+      @media (min-width: 768px) {
+        .sidebar {
+          display: flex;
+        }
+      }
+      
+      .sidebar-header {
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--gray-100);
+      }
+      
+      .dark .sidebar-header {
+        border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+      }
+      
+      .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      
+      .logo {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: 0.5rem;
+        height: 2.5rem;
+        width: 2.5rem;
+        flex-shrink: 0;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      }
+      
+      .logo-text {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      
+      .logo-title {
+        color: var(--text-main);
+        font-size: 1rem;
+        font-weight: 700;
+        line-height: 1.25;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      
+      .dark .logo-title {
+        color: var(--white);
+      }
+      
+      .logo-subtitle {
+        color: var(--text-muted);
+        font-size: 0.75rem;
+        font-weight: 500;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      
+      .dark .logo-subtitle {
+        color: var(--primary);
+      }
+      
+      .sidebar-nav {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 1rem;
+        overflow-y: auto;
+      }
+      
+      .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        color: var(--gray-600);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      
+      .dark .nav-link {
+        color: var(--gray-300);
+      }
+      
+      .nav-link:hover {
+        background-color: var(--gray-50);
+        color: var(--primary);
+      }
+      
+      .dark .nav-link:hover {
+        background-color: var(--gray-800);
+        color: var(--primary);
+      }
+      
+      .nav-link.active {
+        background-color: var(--primary);
+        color: var(--black);
+        box-shadow: 0 4px 6px -1px rgba(17, 212, 17, 0.1), 0 2px 4px -1px rgba(17, 212, 17, 0.06);
+      }
+      
+      .nav-icon {
+        font-size: 24px;
+      }
+      
+      .nav-text {
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+      
+      .sidebar-footer {
+        padding: 1rem;
+        border-top: 1px solid var(--gray-100);
+      }
+      
+      .dark .sidebar-footer {
+        border-top: 1px solid rgba(31, 41, 55, 0.5);
+      }
+      
+      .logout-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        color: var(--red-600);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      
+      .dark .logout-link {
+        color: var(--red-400);
+      }
+      
+      .logout-link:hover {
+        background-color: var(--red-50);
+      }
+      
+      .dark .logout-link:hover {
+        background-color: rgba(254, 226, 226, 0.1);
+      }
+      
+      /* Main Content Area */
+      .main-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+      }
+      
+      /* Header */
+      .header {
+        height: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        background-color: var(--surface-light);
+        border-bottom: 1px solid var(--gray-200);
+        z-index: 10;
+      }
+      
+      @media (min-width: 1024px) {
+        .header {
+          padding-left: 2.5rem;
+          padding-right: 2.5rem;
+        }
+      }
+      
+      .dark .header {
+        background-color: var(--surface-dark);
+        border-bottom: 1px solid var(--gray-800);
+      }
+      
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      
+      .menu-button {
+        display: block;
+        padding: 0.25rem;
+        color: var(--gray-500);
+        background: none;
+        border: none;
+        cursor: pointer;
+      }
+      
+      .menu-button:hover {
+        color: var(--gray-900);
+      }
+      
+      .dark .menu-button {
+        color: var(--gray-400);
+      }
+      
+      .dark .menu-button:hover {
+        color: var(--white);
+      }
+      
+      @media (min-width: 768px) {
+        .menu-button {
+          display: none;
+        }
+      }
+      
+      .page-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: var(--text-main);
+        letter-spacing: -0.025em;
+      }
+      
+      @media (min-width: 1024px) {
+        .page-title {
+          font-size: 1.25rem;
+        }
+      }
+      
+      .dark .page-title {
+        color: var(--white);
+      }
+      
+      .header-right {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      
+      @media (min-width: 1024px) {
+        .header-right {
+          gap: 2rem;
+        }
+      }
+      
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      
+      .divider {
+        height: 1.5rem;
+        width: 1px;
+        background-color: var(--gray-200);
+        margin-left: 0.25rem;
+        margin-right: 0.25rem;
+      }
+      
+      .dark .divider {
+        background-color: var(--gray-700);
+      }
+      
+      .user-avatar-container {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+      }
+      
+      .user-avatar {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: 9999px;
+        height: 2.25rem;
+        width: 2.25rem;
+        border: 2px solid var(--white);
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      }
+      
+      .dark .user-avatar {
+        border: 2px solid var(--gray-700);
+      }
+      
+      /* Main Content */
+      .main {
+        flex: 1;
+        overflow-y: auto;
+        padding: 1rem;
+      }
+      
+      @media (min-width: 1024px) {
+        .main {
+          padding: 2rem;
+        }
+      }
+      
+      .content-section {
+        margin-bottom: 1.5rem;
+      }
+      
+      /* Top Controls */
+      .top-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      @media (min-width: 640px) {
+        .top-controls {
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          gap: 1rem;
+        }
+      }
+      
+      .search-filter-container {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      .search-container {
+        position: relative;
+      }
+      
+      .search-icon {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        padding-left: 0.75rem;
+        display: flex;
+        align-items: center;
+        pointer-events: none;
+      }
+      
+      .search-input {
+        padding-left: 2.5rem;
+        padding-right: 1rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        background-color: var(--surface-light);
+        border: 1px solid var(--gray-200);
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+        color: var(--text-main);
+        width: 100%;
+        outline: none;
+        transition: box-shadow 0.2s;
+      }
+      
+      @media (min-width: 640px) {
+        .search-input {
+          width: 16rem;
+        }
+      }
+      
+      .search-input:focus {
+        box-shadow: 0 0 0 3px rgba(17, 212, 17, 0.1);
+        border-color: var(--primary);
+      }
+      
+      .dark .search-input {
+        background-color: var(--surface-dark);
+        border: 1px solid var(--gray-700);
+        color: var(--white);
+      }
+      
+      .filter-button {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background-color: var(--white);
+        border: 1px solid var(--gray-200);
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--gray-700);
+        transition: background-color 0.2s;
+        cursor: pointer;
+      }
+      
+      .filter-button:hover {
+        background-color: var(--gray-50);
+      }
+      
+      .dark .filter-button {
+        background-color: var(--surface-dark);
+        border: 1px solid var(--gray-700);
+        color: var(--gray-300);
+      }
+      
+      .dark .filter-button:hover {
+        background-color: var(--gray-800);
+      }
+      
+      .add-product-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background-color: var(--primary);
+        border: none;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--black);
+        cursor: pointer;
+        transition: background-color 0.2s;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      }
+      
+      .add-product-button:hover {
+        background-color: var(--primary-dark);
+      }
+      
+      /* Table Container */
+      .table-container {
+        background-color: var(--surface-light);
+        border: 1px solid var(--gray-200);
+        border-radius: 0.75rem;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+      }
+      
+      .dark .table-container {
+        background-color: var(--surface-dark);
+        border: 1px solid var(--gray-700);
+      }
+      
+      .table-wrapper {
+        overflow-x: auto;
+      }
+      
+      .data-table {
+        width: 100%;
+        text-align: left;
+        border-collapse: collapse;
+      }
+      
+      .table-header {
+        background-color: var(--gray-50);
+        border-bottom: 1px solid var(--gray-200);
+      }
+      
+      .dark .table-header {
+        background-color: rgba(31, 41, 55, 0.5);
+        border-bottom: 1px solid var(--gray-700);
+      }
+      
+      .table-header th {
+        padding: 1rem 1.5rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--gray-500);
+      }
+      
+      .dark .table-header th {
+        color: var(--gray-400);
+      }
+      
+      .table-body {
+        border-bottom: 1px solid var(--gray-200);
+      }
+      
+      .dark .table-body {
+        border-bottom: 1px solid var(--gray-700);
+      }
+      
+      .table-row {
+        transition: background-color 0.2s;
+      }
+      
+      .table-row:hover {
+        background-color: var(--gray-50);
+      }
+      
+      .dark .table-row:hover {
+        background-color: rgba(31, 41, 55, 0.3);
+      }
+      
+      .table-row td {
+        padding: 1rem 1.5rem;
+      }
+      
+      .product-cell {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      
+      .product-icon {
+        height: 2.5rem;
+        width: 2.5rem;
+        border-radius: 0.5rem;
+        background-color: var(--gray-100);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+      }
+      
+      .dark .product-icon {
+        background-color: var(--gray-800);
+      }
+      
+      .product-info {
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .product-name {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--text-main);
+      }
+      
+      .dark .product-name {
+        color: var(--white);
+      }
+      
+      .product-id {
+        font-size: 0.75rem;
+        color: var(--gray-500);
+      }
+      
+      .dark .product-id {
+        color: var(--gray-400);
+      }
+      
+      .category-cell,
+      .price-cell,
+      .stock-cell {
+        font-size: 0.875rem;
+        color: var(--gray-600);
+      }
+      
+      .dark .category-cell,
+      .dark .price-cell,
+      .dark .stock-cell {
+        color: var(--gray-300);
+      }
+      
+      .price-cell {
+        font-weight: 500;
+        color: var(--text-main);
+      }
+      
+      .dark .price-cell {
+        color: var(--white);
+      }
+      
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.125rem 0.625rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+      
+      .status-in-stock {
+        background-color: var(--green-100);
+        color: var(--green-800);
+      }
+      
+      .dark .status-in-stock {
+        background-color: rgba(6, 95, 70, 0.3);
+        color: var(--green-400);
+      }
+      
+      .status-low-stock {
+        background-color: var(--orange-100);
+        color: var(--orange-800);
+      }
+      
+      .dark .status-low-stock {
+        background-color: rgba(154, 52, 18, 0.3);
+        color: var(--orange-400);
+      }
+      
+      .status-out-of-stock {
+        background-color: var(--red-100);
+        color: var(--red-800);
+      }
+      
+      .dark .status-out-of-stock {
+        background-color: rgba(153, 27, 27, 0.3);
+        color: var(--red-400);
+      }
+      
+      .actions-cell {
+        text-align: right;
+      }
+      
+      .actions-container {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0.5rem;
+        opacity: 1;
+        transition: opacity 0.2s;
+      }
+      
+      .action-button {
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        transition: background-color 0.2s;
+        cursor: pointer;
+        border: none;
+        background: none;
+      }
+      
+      .edit-button {
+        color: var(--blue-600);
+      }
+      
+      .edit-button:hover {
+        background-color: rgba(37, 99, 235, 0.1);
+      }
+      
+      .dark .edit-button:hover {
+        background-color: rgba(30, 58, 138, 0.2);
+      }
+      
+      .delete-button {
+        color: var(--red-600);
+      }
+      
+      .delete-button:hover {
+        background-color: rgba(220, 38, 38, 0.1);
+      }
+      
+      .dark .delete-button:hover {
+        background-color: rgba(127, 29, 29, 0.2);
+      }
+      
+      .action-icon {
+        font-size: 1.25rem;
+      }
+      
+      /* Table Footer */
+      .table-footer {
+        background-color: var(--gray-50);
+        padding: 1rem 1.5rem;
+        border-top: 1px solid var(--gray-200);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      
+      .dark .table-footer {
+        background-color: rgba(31, 41, 55, 0.5);
+        border-top: 1px solid var(--gray-700);
+      }
+      
+      .pagination-info {
+        font-size: 0.875rem;
+        color: var(--gray-500);
+      }
+      
+      .dark .pagination-info {
+        color: var(--gray-400);
+      }
+      
+      .pagination-info span {
+        font-weight: 500;
+        color: var(--text-main);
+      }
+      
+      .dark .pagination-info span {
+        color: var(--white);
+      }
+      
+      .pagination-controls {
+        display: flex;
+        gap: 0.5rem;
+      }
+      
+      .pagination-button {
+        padding: 0.25rem 0.75rem;
+        font-size: 0.875rem;
+        border: 1px solid var(--gray-300);
+        border-radius: 0.375rem;
+        background-color: var(--white);
+        color: var(--gray-500);
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+      
+      .pagination-button:hover:not(:disabled) {
+        background-color: var(--gray-50);
+      }
+      
+      .pagination-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      
+      .pagination-button.next {
+        color: var(--gray-700);
+      }
+      
+      .dark .pagination-button {
+        border: 1px solid var(--gray-600);
+        background-color: var(--gray-800);
+        color: var(--gray-400);
+      }
+      
+      .dark .pagination-button:hover:not(:disabled) {
+        background-color: var(--gray-700);
+      }
+      
+      .dark .pagination-button.next {
+        color: var(--gray-200);
+      }
+      
+      /* Stats Cards */
+      .stats-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      
+      @media (min-width: 640px) {
+        .stats-container {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      
+      @media (min-width: 1024px) {
+        .stats-container {
+          gap: 1.5rem;
+        }
+      }
+      
+      .stat-card {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        border-radius: 0.75rem;
+        padding: 1.25rem;
+        background-color: var(--surface-light);
+        border: 1px solid var(--gray-200);
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      }
+      
+      .dark .stat-card {
+        background-color: var(--surface-dark);
+        border: 1px solid var(--gray-700);
+      }
+      
+      .stat-label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: var(--gray-500);
+      }
+      
+      .dark .stat-label {
+        color: var(--gray-400);
+      }
+      
+      .stat-content {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      .stat-icon {
+        font-size: 1.5rem;
+      }
+      
+      .stat-icon.primary {
+        color: var(--primary);
+      }
+      
+      .stat-icon.green {
+        color: #10b981;
+      }
+      
+      .stat-icon.red {
+        color: #ef4444;
+      }
+      
+      .stat-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-main);
+      }
+      
+      .dark .stat-value {
+        color: var(--white);
+      }
+    </style>
+  </head>
+  <body class="light">
+    <div class="container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-container">
+            <div class="logo" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBhg40oKbuItpnGuflPWvZAc_GnzIHosHnSPqSqkeyiG14tfHdOYT-daBkrce7SEfTnDNjEtcGz2K11mBb6c2dfherOV3Om0vPCGcj9kBLUqkiNNj-nMmPOsKLxmDwwJf-V2TzRnWCwz1tvJhTU-OMI31AVWH6dIWwmIpxLFz34gkMLY8pmsHe88CPMwNStK-HHewI24FeXXAYKUEKERhWveYLseUZ74jHhDlFuQ8c-cCtt4Pz6BdznWLn96Mgiki6RK1pDi-9X9Ood');"></div>
+            <div class="logo-text">
+              <h1 class="logo-title">Krishi Sewa</h1>
+              <p class="logo-subtitle">Vendor</p>
+            </div>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav">
+          <a class="nav-link" href="#">
+            <span class="material-symbols-outlined nav-icon">dashboard</span>
+            <span class="nav-text">Dashboard</span>
+          </a>
+          <a class="nav-link active" href="#">
+            <span class="material-symbols-outlined nav-icon">inventory_2</span>
+            <span class="nav-text">Product</span>
+          </a>
+          <a class="nav-link" href="#">
+            <span class="material-symbols-outlined nav-icon">shopping_bag</span>
+            <span class="nav-text">Sales</span>
+          </a>
+        </nav>
+
+        <div class="sidebar-footer">
+          <a class="logout-link" href="#">
+            <span class="material-symbols-outlined nav-icon">logout</span>
+            <span class="nav-text">Logout</span>
+          </a>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Header -->
+        <header class="header">
+          <div class="header-left">
+            <button class="menu-button"><span class="material-symbols-outlined">menu</span></button>
+            <h2 class="page-title">Product Management</h2>
+          </div>
+
+          <div class="header-right">
+            <div class="user-info">
+              <div class="divider"></div>
+              <div class="user-avatar-container">
+                <div class="user-avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDKXfhnuyBC8RzmXnCBtR-kJvDNOl2PVHWxv1z-awlPqRQspuyoVR0YvPTq6q4USeHyChiGM2QzPpR9JdlPc-rTGEbyOxZxYXCj1ZRArBPYAMFjWgAm81f1kXjo_87hdX-xU_gd3N1ncWCwL_oybge3rdLhTB-t0Aq1v8033Sy0XLlZ8T_xBRurEJYspx2tm74FMwEDjGcoRT5pmCuUeNsp0VZzHU0tgxgZ9tn9RggLHVh2sOWLUFqEbLdK2sqXNX7MSF6kBli4PAq4');"></div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="main">
+          <!-- Top Controls -->
+          <div class="content-section top-controls">
+            <div class="search-filter-container">
+              <div class="search-container">
+                <span class="search-icon"><span class="material-symbols-outlined">search</span></span>
+                <input class="search-input" type="text" placeholder="Search products..." />
+              </div>
+              <button class="filter-button">
+                <span class="material-symbols-outlined">filter_list</span>
+                Filter
+              </button>
+            </div>
+            <button class="add-product-button">
+              <span class="material-symbols-outlined">add</span>
+              Add New Product
+            </button>
+          </div>
+
+          <!-- Products Table -->
+          <div class="content-section table-container">
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead class="table-header">
+                  <tr>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Price (₹)</th>
+                    <th>Stock</th>
+                    <th>Status</th>
+                    <th class="actions-cell">Actions</th>
+                  </tr>
+                </thead>
+                <tbody class="table-body">
+                    
+                  {% for product in products %}
+                    <tr class="table-row">
+                      <td>
+                        <div class="product-cell">
+                          <div class="product-icon">
+                            {% if product.image %}
+                              <img src="{{ product.image.url }}" width="40" height="40" />
+                            {% else %}
+                                📦
+                            {% endif %}
+                          </div>
+                          <div class="product-info">
+                            <p class="product-name">{{ product.name }}</p>
+                            <p class="product-id">ID: #{{ product.id }}</p>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td class="category-cell">{{ product.category }}</td>
+
+                      <td class="price-cell">{{ product.selling_price }}</td>
+
+                      <td class="stock-cell">{{ product.stock }} {{ product.measurement_unit }}</td>
+
+                      <td>
+                        {% if product.stock > 0 %}
+                          <span class="status-badge status-in-stock">In Stock</span>
+                        {% else %}
+                          <span class="status-badge status-out-of-stock">Out of Stock</span>
+                        {% endif %}
+                      </td>
+
+                      <td class="actions-cell">
+                        <div class="actions-container">
+                          <button class="action-button edit-button" title="Edit"><span class="material-symbols-outlined action-icon">edit</span></button>
+                          <button class="action-button delete-button" title="Delete"><span class="material-symbols-outlined action-icon">delete</span></button>
+                        </div>
+                      </td>
+                    </tr>
+                  {% endfor %}
+
+                  <!-- Product 1 -->
+                  <tr class="table-row">
+                    <td>
+                      <div class="product-cell">
+                        <div class="product-icon">🌾</div>
+                        <div class="product-info">
+                          <p class="product-name">High-Yield Rice Seeds</p>
+                          <p class="product-id">ID: #KS-3101</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="category-cell">Seeds</td>
+                    <td class="price-cell">1250.00</td>
+                    <td class="stock-cell">500 kg</td>
+                    <td>
+                      <span class="status-badge status-in-stock">In Stock</span>
+                    </td>
+                    <td class="actions-cell">
+                      <div class="actions-container">
+                        <button class="action-button edit-button" title="Edit"><span class="material-symbols-outlined action-icon">edit</span></button>
+                        <button class="action-button delete-button" title="Delete"><span class="material-symbols-outlined action-icon">delete</span></button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Product 2 -->
+                  <tr class="table-row">
+                    <td>
+                      <div class="product-cell">
+                        <div class="product-icon">🧴</div>
+                        <div class="product-info">
+                          <p class="product-name">Nitrogen Bio-Fertilizer</p>
+                          <p class="product-id">ID: #KS-3102</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="category-cell">Agriculture Medicine</td>
+                    <td class="price-cell">450.00</td>
+                    <td class="stock-cell">200 L</td>
+                    <td>
+                      <span class="status-badge status-in-stock">In Stock</span>
+                    </td>
+                    <td class="actions-cell">
+                      <div class="actions-container">
+                        <button class="action-button edit-button" title="Edit"><span class="material-symbols-outlined action-icon">edit</span></button>
+                        <button class="action-button delete-button" title="Delete"><span class="material-symbols-outlined action-icon">delete</span></button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Product 3 -->
+                  <tr class="table-row">
+                    <td>
+                      <div class="product-cell">
+                        <div class="product-icon">⛏️</div>
+                        <div class="product-info">
+                          <p class="product-name">Heavy Duty Hoe (Kudal)</p>
+                          <p class="product-id">ID: #KS-3103</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="category-cell">Tools</td>
+                    <td class="price-cell">350.00</td>
+                    <td class="stock-cell">45 units</td>
+                    <td>
+                      <span class="status-badge status-in-stock">In Stock</span>
+                    </td>
+                    <td class="actions-cell">
+                      <div class="actions-container">
+                        <button class="action-button edit-button" title="Edit"><span class="material-symbols-outlined action-icon">edit</span></button>
+                        <button class="action-button delete-button" title="Delete"><span class="material-symbols-outlined action-icon">delete</span></button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Product 4 -->
+                  <tr class="table-row">
+                    <td>
+                      <div class="product-cell">
+                        <div class="product-icon">🌻</div>
+                        <div class="product-info">
+                          <p class="product-name">Sunflower Hybrid Seeds</p>
+                          <p class="product-id">ID: #KS-3104</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="category-cell">Seeds</td>
+                    <td class="price-cell">420.00</td>
+                    <td class="stock-cell">15 kg</td>
+                    <td>
+                      <span class="status-badge status-low-stock">Low Stock</span>
+                    </td>
+                    <td class="actions-cell">
+                      <div class="actions-container">
+                        <button class="action-button edit-button" title="Edit"><span class="material-symbols-outlined action-icon">edit</span></button>
+                        <button class="action-button delete-button" title="Delete"><span class="material-symbols-outlined action-icon">delete</span></button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Product 5 -->
+                  <tr class="table-row">
+                    <td>
+                      <div class="product-cell">
+                        <div class="product-icon">🧤</div>
+                        <div class="product-info">
+                          <p class="product-name">Protective Farm Gloves</p>
+                          <p class="product-id">ID: #KS-3105</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="category-cell">Tools</td>
+                    <td class="price-cell">120.00</td>
+                    <td class="stock-cell">0 units</td>
+                    <td>
+                      <span class="status-badge status-out-of-stock">Out of Stock</span>
+                    </td>
+                    <td class="actions-cell">
+                      <div class="actions-container">
+                        <button class="action-button edit-button" title="Edit"><span class="material-symbols-outlined action-icon">edit</span></button>
+                        <button class="action-button delete-button" title="Delete"><span class="material-symbols-outlined action-icon">delete</span></button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="table-footer">
+              <span class="pagination-info">Showing <span>1</span> to <span>5</span> of <span>48</span> products</span>
+              <div class="pagination-controls">
+                <button class="pagination-button" disabled>Previous</button>
+                <button class="pagination-button next">Next</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stats Cards -->
+          <div class="stats-container">
+            <div class="stat-card">
+              <span class="stat-label">Total Products</span>
+              <div class="stat-content">
+                <span class="material-symbols-outlined stat-icon primary">inventory_2</span>
+                <h4 class="stat-value">48</h4>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <span class="stat-label">Active Listings</span>
+              <div class="stat-content">
+                <span class="material-symbols-outlined stat-icon green">check_circle</span>
+                <h4 class="stat-value">42</h4>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <span class="stat-label">Out of Stock</span>
+              <div class="stat-content">
+                <span class="material-symbols-outlined stat-icon red">warning</span>
+                <h4 class="stat-value">6</h4>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

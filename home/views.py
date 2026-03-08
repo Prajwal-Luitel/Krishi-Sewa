@@ -1,6 +1,8 @@
 import os
 from django.shortcuts import render
+from vendor.models import Product
 from ultralytics import YOLO
+from django.contrib.auth.decorators import login_required
 from PIL import Image
 import io
 import base64
@@ -15,6 +17,7 @@ try:
 except Exception:
     pass  # Continue with CPU if CUDA is not available   
 
+@login_required(login_url='login')
 def detect(request):
     context = {}
     
@@ -67,3 +70,9 @@ def detect(request):
         context['detections'] = detections
     
     return render(request, "detect.html", context)
+
+@login_required(login_url='login')
+def products(request):
+    products = Product.objects.all()
+    context = {"products": products}
+    return render(request, "products.html", context=context)
