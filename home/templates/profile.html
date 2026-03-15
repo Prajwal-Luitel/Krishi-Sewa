@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Krishi Sewa - Profile</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  :root {
+    --primary: #13ec13;
+    --primary-dark: #0ea00e;
+    --nav-bg: #064e3b;
+    --background-light: #f3fdf3;
+    --background-dark: #021202;
+    --surface-light: #ffffff;
+    --surface-dark: #0a260a;
+    --text-main: #0d1b0d;
+    --text-muted: #5c8a5c;
+    --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+    --shadow-glow: 0 0 15px rgba(19, 236, 19, 0.3);
+  }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background-color: var(--background-light);
+    color: var(--text-main);
+    transition: background-color 0.2s, color 0.2s;
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #f1f1f1; }
+  ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #13ec13; }
+
+  /* ===================== PAGE WRAPPER ===================== */
+  .page-wrapper {
+    position: relative;
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+
+  /* ===================== MAIN ===================== */
+  main {
+    flex-grow: 1;
+    padding: 40px 0 80px;
+    background-color: var(--background-light);
+  }
+
+  .main-inner {
+    margin: 0 auto;
+    max-width: 1280px;
+    padding: 0 16px;
+  }
+
+  @media (min-width: 640px) { .main-inner { padding: 0 24px; } }
+  @media (min-width: 1024px) { .main-inner { padding: 0 32px; } }
+
+  .profile-container {
+    max-width: 896px;
+    margin: 0 auto;
+  }
+
+  /* Page heading */
+  .profile-heading {
+    margin-bottom: 40px;
+  }
+
+  .profile-heading h1 {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: -0.025em;
+  }
+
+  @media (min-width: 768px) { .profile-heading h1 { font-size: 36px; } }
+
+  .profile-heading p {
+    margin-top: 8px;
+    color: var(--text-muted);
+  }
+
+  /* Profile card */
+  .profile-card {
+    background: var(--surface-light);
+    border-radius: 24px;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid #f3f4f6;
+    overflow: hidden;
+  }
+
+  .profile-card-inner {
+    padding: 32px;
+  }
+
+  @media (min-width: 768px) { .profile-card-inner { padding: 48px; } }
+
+  /* Avatar + form layout */
+  .profile-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: flex-start;
+  }
+
+  @media (min-width: 768px) {
+    .profile-layout {
+      flex-direction: row;
+      gap: 64px;
+    }
+  }
+
+  /* Avatar column */
+  .avatar-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+  }
+
+  @media (min-width: 768px) { .avatar-col { width: auto; } }
+
+  .avatar-wrap {
+    position: relative;
+  }
+
+  .avatar-ring {
+    height: 128px;
+    width: 128px;
+    border-radius: 50%;
+    overflow: hidden;
+    outline: 4px solid #ffffff;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+    background: #f3f4f6;
+  }
+
+  @media (min-width: 768px) {
+    .avatar-ring {
+      height: 160px;
+      width: 160px;
+    }
+  }
+
+  .avatar-ring img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .avatar-upload-label {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    cursor: pointer;
+    background: var(--primary);
+    color: #000000;
+    padding: 10px;
+    border-radius: 50%;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    border: 2px solid var(--surface-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, transform 0.2s;
+  }
+
+  .avatar-upload-label:hover {
+    background: var(--primary-dark);
+    transform: scale(1.1);
+  }
+
+  .avatar-upload-label .material-symbols-outlined { font-size: 20px; font-weight: 700; }
+
+  .avatar-upload-input { display: none; }
+
+  .avatar-name {
+    text-align: center;
+  }
+
+  .avatar-name h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+
+  /* Form column */
+  .form-col {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  /* Fields grid */
+  .fields-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  @media (min-width: 768px) { .fields-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .field-group.full-width {
+    grid-column: span 2;
+  }
+  
+  @media (max-width: 767px) {
+    .field-group {
+      grid-column: span 2;
+    }
+  }
+
+  .field-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-left: 4px;
+  }
+
+  .field-input-wrap {
+    position: relative;
+  }
+
+  .field-input {
+    display: block;
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    color: var(--text-main);
+    padding: 12px 16px;
+    font-size: 14px;
+    font-family: 'Space Grotesk', sans-serif;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .field-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(19,236,19,0.2), var(--shadow-glow);
+  }
+
+  .field-input-readonly {
+    background: #f9fafb;
+    color: #6b7280;
+    cursor: not-allowed;
+  }
+
+  .field-icon {
+    position: absolute;
+    right: 16px;
+    top: 12px;
+    color: #9ca3af;
+    font-size: 20px;
+    pointer-events: none;
+  }
+
+  /* Password row */
+  .password-row {
+    display: flex;
+    gap: 12px;
+  }
+
+  .password-input-wrap {
+    position: relative;
+    flex-grow: 1;
+  }
+
+  .change-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-main);
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+    white-space: nowrap;
+    transition: background-color 0.2s;
+  }
+
+  .change-btn:hover { background: #f9fafb; }
+
+  /* Form actions */
+  .form-actions {
+    padding-top: 24px;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+    border-top: 1px solid #f3f4f6;
+  }
+
+  @media (min-width: 640px) {
+    .form-actions { flex-direction: row; }
+  }
+
+  .btn-cancel {
+    width: 100%;
+    padding: 12px 24px;
+    border-radius: 12px;
+    color: #4b5563;
+    font-weight: 700;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    transition: background-color 0.2s;
+  }
+
+  .btn-cancel:hover { background: #f3f4f6; }
+
+  @media (min-width: 640px) { .btn-cancel { width: auto; } }
+
+  .btn-save {
+    width: 100%;
+    padding: 12px 32px;
+    border-radius: 12px;
+    background: var(--primary);
+    color: #000000;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    box-shadow: var(--shadow-glow);
+    transition: background-color 0.3s, transform 0.3s;
+  }
+
+  .btn-save:hover {
+    background: var(--primary-dark);
+    transform: scale(1.05);
+  }
+
+  @media (min-width: 640px) { .btn-save { width: auto; } }
+
+  /* Success Alert */
+  .success-alert {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #ffffff;
+    padding: 16px 24px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3);
+    animation: slideIn 0.3s ease-out;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .success-alert .material-symbols-outlined {
+    font-size: 24px;
+  }
+
+  .success-alert-text {
+    flex: 1;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  /* Error message */
+  .error-message {
+    color: #dc2626;
+    font-size: 12px;
+    margin-top: 4px;
+    margin-left: 4px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .error-message .material-symbols-outlined {
+    font-size: 16px;
+  }
+
+  .field-input-error {
+    border-color: #dc2626 !important;
+  }
+
+  .field-input-error:focus {
+    box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2) !important;
+  }
+</style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  {% load static %}
+  {% include 'nav.html' %}
+
+  <!-- MAIN -->
+  <main>
+    <div class="main-inner">
+      <div class="profile-container">
+
+        <!-- Heading -->
+        <div class="profile-heading">
+          <h1>My Profile</h1>
+          <p>Manage your personal information and account security.</p>
+        </div>
+
+        <!-- Success Alert -->
+        {% if success %}
+        <div class="success-alert">
+          <span class="material-symbols-outlined">check_circle</span>
+          <span class="success-alert-text">{{ success_message }}</span>
+        </div>
+        {% endif %}
+
+        <!-- Profile card -->
+        <div class="profile-card">
+          <div class="profile-card-inner">
+            <div class="profile-layout">
+
+              <!-- Avatar column -->
+              <div class="avatar-col">
+                <div class="avatar-wrap">
+                  <div class="avatar-ring">
+                    {% if user.profile_pic %}
+                      <img alt="User Profile Picture" src="{{ user.profile_pic.url }}"/>
+                    {% else %}
+                      <img alt="Default Profile Picture" src="https://ui-avatars.com/api/?name={{ user.first_name }}+{{ user.last_name }}&size=160&background=13ec13&color=000000&bold=true"/>
+                    {% endif %}
+                  </div>
+                  <label class="avatar-upload-label" for="profile_pic_input">
+                    <input class="avatar-upload-input" type="file" id="profile_pic_input" name="profile_pic" accept="image/*" form="profile-form"/>
+                    <span class="material-symbols-outlined">photo_camera</span>
+                  </label>
+                </div>
+                <div class="avatar-name">
+                  <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+                </div>
+              </div>
+
+              <!-- Form column -->
+              <form method="POST" enctype="multipart/form-data" class="form-col" id="profile-form">
+                {% csrf_token %}
+                <div class="fields-grid">
+
+                  <!-- Name -->
+                  <div class="field-group full-width">
+                    <label class="field-label">Name</label>
+                    <div class="field-input-wrap">
+                      <input class="field-input {% if errors.name %}field-input-error{% endif %}" 
+                             type="text" 
+                             name="name" 
+                             value="{% if form_data.name %}{{ form_data.name }}{% else %}{{ user.first_name }} {{ user.last_name }}{% endif %}" 
+                             required/>
+                      <span class="material-symbols-outlined field-icon">badge</span>
+                    </div>
+                    {% if errors.name %}
+                    <div class="error-message">
+                      <span class="material-symbols-outlined">error</span>
+                      {{ errors.name }}
+                    </div>
+                    {% endif %}
+                  </div>
+
+                  <!-- Username -->
+                  <div class="field-group full-width">
+                    <label class="field-label">Username</label>
+                    <div class="field-input-wrap">
+                      <input class="field-input {% if errors.username %}field-input-error{% endif %}" 
+                             type="text" 
+                             name="username" 
+                             value="{% if form_data.username %}{{ form_data.username }}{% else %}{{ user.username }}{% endif %}" 
+                             required/>
+                      <span class="material-symbols-outlined field-icon">person</span>
+                    </div>
+                    {% if errors.username %}
+                    <div class="error-message">
+                      <span class="material-symbols-outlined">error</span>
+                      {{ errors.username }}
+                    </div>
+                    {% endif %}
+                  </div>
+
+                  <!-- Email -->
+                  <div class="field-group full-width">
+                    <label class="field-label">Email Address</label>
+                    <div class="field-input-wrap">
+                      <input class="field-input {% if errors.email %}field-input-error{% endif %}" 
+                             type="email" 
+                             name="email" 
+                             value="{% if form_data.email %}{{ form_data.email }}{% else %}{{ user.email }}{% endif %}" 
+                             required/>
+                      <span class="material-symbols-outlined field-icon">mail</span>
+                    </div>
+                    {% if errors.email %}
+                    <div class="error-message">
+                      <span class="material-symbols-outlined">error</span>
+                      {{ errors.email }}
+                    </div>
+                    {% endif %}
+                  </div>
+
+                  <!-- Password -->
+                  <div class="field-group full-width">
+                    <label class="field-label">Password</label>
+                    <div class="password-row">
+                      <div class="password-input-wrap">
+                        <input class="field-input field-input-readonly" readonly type="password" value="supersecurepassword123"/>
+                        <span class="material-symbols-outlined field-icon">lock</span>
+                      </div>
+                      <button class="change-btn">Change</button>
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- Actions -->
+                <div class="form-actions">
+                  <button type="button" class="btn-cancel" onclick="window.location.reload()">Cancel</button>
+                  <button type="submit" class="btn-save">Save Changes</button>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  {% include 'footer.html' %}
+
+</div>
+</body>
+</html>

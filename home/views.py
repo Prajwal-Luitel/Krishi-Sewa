@@ -1,6 +1,8 @@
 import os
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models import Q
 from vendor.models import Product
+from home.models import Cart, CartItem
 from ultralytics import YOLO
 from django.contrib.auth.decorators import login_required
 from PIL import Image
@@ -74,5 +76,156 @@ def detect(request):
 @login_required(login_url='login')
 def products(request):
     products = Product.objects.all()
-    context = {"products": products}
+
+    # Search filter
+    search_query = request.GET.get('q', '').strip()
+    if search_query:
+        products = products.filter(
+            Q(name__icontains=search_query) |
+            Q(description__icontains=search_query) |
+            Q(brand__icontains=search_query) |
+            Q(category__icontains=search_query)
+        )
+
+    # Category filter
+    selected_categories = request.GET.getlist('category')
+    if selected_categories:
+        products = products.filter(category__in=selected_categories)
+
+    # Price range filter
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    if min_price:
+        products = products.filter(selling_price__gte=min_price)
+    if max_price:
+        products = products.filter(selling_price__lte=max_price)
+
+    # Sort
+    sort_by = request.GET.get('sort_by', 'price_asc')
+    if sort_by == 'price_desc':
+        products = products.order_by('-selling_price')
+    else:
+        products = products.order_by('selling_price')
+
+    context = {
+        "products": products,
+        "selected_categories": selected_categories,
+        "sort_by": sort_by,
+        "min_price": min_price or '',
+        "max_price": max_price or '',
+        "search_query": search_query,
+    }
     return render(request, "products.html", context=context)
+
+@login_required(login_url='login')
+def home(request):
+    products = Product.objects.all()[:4]
+    context = {'products': products}
+    return render(request, "home.html", context)
+
+@login_required(login_url='login')
+def cart(request):
+    cart, _ = Cart.objects.get_or_create(user=request.user)
+    cart_items = cart.items.select_related('product').all()
+    context = {
+        'cart': cart,
+        'cart_items': cart_items,
+    }
+    return render(request, "cart.html", context)
+
+
+@login_required(login_url='login')
+def add_to_cart(request, product_id):
+    if request.method == 'POST':
+        product = get_object_or_404(Product, id=product_id)
+        cart, _ = Cart.objects.get_or_create(user=request.user)
+        cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+        if not created:
+            cart_item.quantity += 1
+            cart_item.save()
+    return redirect(request.META.get('HTTP_REFERER', 'cart'))
+
+
+@login_required(login_url='login')
+def remove_from_cart(request, item_id):
+    if request.method == 'POST':
+        cart_item = get_object_or_404(CartItem, id=item_id, cart__user=request.user)
+        cart_item.delete()
+    return redirect('cart')
+
+
+@login_required(login_url='login')
+def update_cart_item(request, item_id):
+    if request.method == 'POST':
+        cart_item = get_object_or_404(CartItem, id=item_id, cart__user=request.user)
+        action = request.POST.get('action')
+        if action == 'increase':
+            cart_item.quantity += 1
+            cart_item.save()
+        elif action == 'decrease':
+            if cart_item.quantity > 1:
+                cart_item.quantity -= 1
+                cart_item.save()
+            else:
+                cart_item.delete()
+    return redirect('cart')
+
+@login_required(login_url='login')
+def profile(request):
+    from django.contrib.auth import get_user_model
+    from django.contrib import messages
+    
+    User = get_user_model()
+    user = request.user
+    context = {}
+    
+    if request.method == 'POST':
+        # Get form data
+        name = request.POST.get('name', '').strip()
+        username = request.POST.get('username', '').strip()
+        email = request.POST.get('email', '').strip()
+        profile_pic = request.FILES.get('profile_pic')
+        
+        errors = {}
+        
+        # Validate required fields
+        if not name:
+            errors['name'] = 'Name is required'
+        if not username:
+            errors['username'] = 'Username is required'
+        if not email:
+            errors['email'] = 'Email is required'
+        
+        # Check if username is unique (excluding current user)
+        if username and User.objects.filter(username=username).exclude(pk=user.pk).exists():
+            errors['username'] = 'Username already exists'
+        
+        # Check if email is unique (excluding current user)
+        if email and User.objects.filter(email=email).exclude(pk=user.pk).exists():
+            errors['email'] = 'Email already exists'
+        
+        if errors:
+            context['errors'] = errors
+            context['form_data'] = {
+                'name': name,
+                'username': username,
+                'email': email,
+            }
+        else:
+            # Split name into first_name and last_name
+            name_parts = name.split(maxsplit=1)
+            user.first_name = name_parts[0] if len(name_parts) > 0 else ''
+            user.last_name = name_parts[1] if len(name_parts) > 1 else ''
+            user.username = username
+            user.email = email
+            
+            # Handle profile picture upload
+            if profile_pic:
+                user.profile_pic = profile_pic
+            
+            user.save()
+            
+            context['success'] = True
+            context['success_message'] = 'Profile updated successfully!'
+    
+    return render(request, "profile.html", context)

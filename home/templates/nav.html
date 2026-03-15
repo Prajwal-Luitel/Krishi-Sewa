@@ -1,47 +1,498 @@
-    <!-- Navbar -->
-     {% load static %}
-     
-     <link rel="stylesheet" href="{% static 'css/nav.css' %}">
+{% load static %}
 
-    <nav class="navbar">
-        <div class="nav-left">
-            <div class="logo">
-                <i class="fas fa-seedling"></i>
-            </div>
-            <div class="company-name">
-                <span class="top">Krishi</span>
-                <span class="bottom">Sewa</span>
-            </div>
-        </div>
+<style>
+  /* ===================== HEADER NAV ===================== */
+  :root {
+    --primary: #13ec13;
+    --primary-dark: #0ea00e;
+    --nav-bg: #064e3b;
+    --shadow-glow: 0 0 15px rgba(19, 236, 19, 0.3);
+  }
+  
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    width: 100%;
+    border-bottom: 1px solid #065f46;
+    background: rgba(6, 78, 59, 0.95);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .header-inner {
+    margin: 0 auto;
+    display: flex;
+    height: 96px;
+    max-width: 1280px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+  }
+  
+  @media (min-width: 640px) {
+    .header-inner {
+      padding: 0 24px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .header-inner {
+      padding: 0 32px;
+    }
+  }
+  
+  .logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .logo-icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--primary);
+  }
+  
+  .logo-icon-wrap .material-symbols-outlined {
+    font-size: 30px;
+  }
+  
+  .logo-link {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    text-decoration: none;
+  }
+  
+  .logo-krishi {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: #ffffff;
+  }
+  
+  .logo-sewa {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--primary);
+  }
+  
+  /* Search */
+  .search-wrap {
+    display: none;
+    flex: 1;
+    max-width: 512px;
+    margin: 0 48px;
+  }
+  
+  @media (min-width: 768px) {
+    .search-wrap {
+      display: flex;
+    }
+  }
+  
+  .search-inner {
+    position: relative;
+    width: 100%;
+  }
+  
+  .search-icon {
+    pointer-events: none;
+    position: absolute;
+    inset: 0 auto 0 0;
+    display: flex;
+    align-items: center;
+    padding-left: 16px;
+  }
+  
+  .search-icon .material-symbols-outlined {
+    color: #9ca3af;
+    font-size: 20px;
+    transition: color 0.2s;
+  }
+  
+  .search-input {
+    display: block;
+    width: 100%;
+    border-radius: 9999px;
+    border: 0;
+    background: #ffffff;
+    padding: 12px 16px 12px 48px;
+    color: #111827;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    outline: none;
+    transition: box-shadow 0.2s;
+  }
+  
+  .search-input::placeholder {
+    color: #9ca3af;
+  }
+  .search-input:focus {
+    box-shadow: 0 0 0 2px var(--primary), var(--shadow-glow);
+  }
+  
+  /* Header right */
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  @media (min-width: 640px) {
+    .header-right {
+      gap: 24px;
+    }
+  }
+  
+  .desktop-nav {
+    display: none;
+    align-items: center;
+    gap: 32px;
+  }
+  
+  @media (min-width: 768px) {
+    .desktop-nav {
+      display: flex;
+    }
+  }
+  
+  .nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: #e5e7eb;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  
+  .nav-link:hover {
+    color: var(--primary);
+  }
+  
+  .nav-link .material-symbols-outlined {
+    font-size: 30px;
+    transition: transform 0.2s;
+  }
+  
+  .nav-link:hover .material-symbols-outlined {
+    transform: scale(1.1);
+  }
+  
+  .nav-link .nav-label {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+  }
+  
+  /* Active nav */
+  .nav-link-active {
+    position: relative;
+    color: var(--primary);
+  }
+  
+  .nav-link-active .material-symbols-outlined {
+    filter: drop-shadow(0 0 8px rgba(19, 236, 19, 0.3));
+  }
+  
+  .nav-link-active .nav-label {
+    font-weight: 700;
+  }
+  
+  .nav-active-bar {
+    position: absolute;
+    bottom: -8px;
+    height: 4px;
+    width: 24px;
+    border-radius: 9999px;
+    background: var(--primary);
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .header-divider {
+    display: none;
+    height: 32px;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 0 8px;
+  }
+  
+  @media (min-width: 768px) {
+    .header-divider {
+      display: block;
+    }
+  }
+  
+  .icon-btn-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .icon-btn {
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    color: #e5e7eb;
+    transition: color 0.2s;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+  
+  .icon-btn:hover {
+    color: var(--primary);
+  }
+  .icon-btn .material-symbols-outlined {
+    font-size: 30px;
+    display: block;
+  }
+  
+  .icon-btn.nav-link-active {
+    color: var(--primary);
+  }
+  .icon-btn.nav-link-active .material-symbols-outlined {
+    filter: drop-shadow(0 0 8px rgba(19, 236, 19, 0.3));
+  }
+  
+  /* Profile Dropdown */
+  .profile-dropdown-wrap {
+    position: relative;
+  }
+  
+  .profile-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: -8px;
+    min-width: 200px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid #f3f4f6;
+    padding: 8px 0;
+    z-index: 100;
+    animation: dropdownFadeIn 0.2s ease-out;
+  }
+  
+  /* Invisible bridge to keep hover when moving to dropdown */
+  .profile-dropdown::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 0;
+    right: 0;
+    height: 12px;
+  }
+  
+  @keyframes dropdownFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .profile-dropdown-wrap:hover .profile-dropdown {
+    display: block;
+  }
+  
+  .dropdown-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  
+  .dropdown-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+  }
+  
+  .dropdown-email {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    text-decoration: none;
+    transition: background-color 0.15s, color 0.15s;
+  }
+  
+  .dropdown-item:hover {
+    background: #f9fafb;
+    color: var(--primary-dark);
+  }
+  
+  .dropdown-item .material-symbols-outlined {
+    font-size: 20px;
+  }
+  
+  .dropdown-divider {
+    height: 1px;
+    background: #f3f4f6;
+    margin: 4px 0;
+  }
+  
+  .dropdown-item.logout-item {
+    color: #dc2626;
+  }
+  
+  .dropdown-item.logout-item:hover {
+    background: #fef2f2;
+    color: #b91c1c;
+  }
+  
+  .cart-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    display: flex;
+    height: 20px;
+    width: 20px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--primary);
+    font-size: 11px;
+    font-weight: 700;
+    color: #000;
+    border: 2px solid var(--nav-bg);
+  }
+  
+  .cart-badge .material-symbols-outlined {
+    font-size: 12px;
+    font-weight: 700;
+  }
+  
+  .mobile-menu-btn {
+    display: flex;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    color: #ffffff;
+    margin-left: 8px;
+  }
+  
+  .mobile-menu-btn .material-symbols-outlined {
+    font-size: 30px;
+  }
+  
+  @media (min-width: 768px) {
+    .mobile-menu-btn {
+      display: none;
+    }
+  }
+</style>
 
-        <div class="nav-middle">
-            <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search for products...">
-                <i class="fas fa-search search-icon"></i>
-            </div>
-        </div>
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="logo-area">
+      <div class="logo-icon-wrap">
+        <span class="material-symbols-outlined">agriculture</span>
+      </div>
+      <a class="logo-link" href="{% url 'home' %}">
+        <span class="logo-krishi">Krishi</span>
+        <span class="logo-sewa">Sewa</span>
+      </a>
+    </div>
 
-        <div class="nav-right">
-            <div class="nav-links">
-                <a href="#" class="nav-item">Home</a>
-                <a href="#" class="nav-item">Products</a>
-                <a href="#" class="nav-item">Detect</a>
-            </div>
-            <button class="mobile-menu-btn">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="nav-icons">
-                <div class="icon-group">
-                    <div class="icon-wrapper">
-                        <i class="fas fa-shopping-cart icon"></i>
-                        <span class="cart-badge">3</span>
-                    </div>
-                </div>
-                <div class="icon-group">
-                    <div class="icon-wrapper">
-                        <i class="fas fa-user icon"></i>
-                    </div>
-                </div>
-            </div>
+    <div class="search-wrap">
+      <form class="search-inner" action="{% url 'products' %}" method="GET">
+        <div class="search-icon">
+          <span class="material-symbols-outlined">search</span>
         </div>
-    </nav>
+        <input class="search-input" name="q" placeholder="Search for seeds, tools, or diseases..." type="text" value="{{ request.GET.q|default:'' }}" />
+      </form>
+    </div>
+
+    <div class="header-right">
+      <nav class="desktop-nav">
+        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}nav-link-active{% endif %}" href="{% url 'home' %}">
+          <span class="material-symbols-outlined">home</span>
+          <span class="nav-label">Home</span>
+          {% if request.resolver_match.url_name == 'home' %}
+            <span class="nav-active-bar"></span>
+          {% endif %}
+        </a>
+        <a class="nav-link {% if request.resolver_match.url_name == 'products' %}nav-link-active{% endif %}" href="{% url 'products' %}">
+          <span class="material-symbols-outlined">potted_plant</span>
+          <span class="nav-label">Product</span>
+          {% if request.resolver_match.url_name == 'products' %}
+            <span class="nav-active-bar"></span>
+          {% endif %}
+        </a>
+        <a class="nav-link {% if request.resolver_match.url_name == 'detect' %}nav-link-active{% endif %}" href="{% url 'detect' %}">
+          <span class="material-symbols-outlined">document_scanner</span>
+          <span class="nav-label">Detect</span>
+          {% if request.resolver_match.url_name == 'detect' %}
+            <span class="nav-active-bar"></span>
+          {% endif %}
+        </a>
+      </nav>
+
+      <div class="header-divider"></div>
+
+      <div class="icon-btn-group">
+        <a aria-label="Cart" class="icon-btn {% if request.resolver_match.url_name == 'cart' %}nav-link-active{% endif %}" href="{% url 'cart' %}">
+          <span class="material-symbols-outlined">shopping_cart</span>
+          {% if cart_count %}
+            <span class="cart-badge">{{ cart_count }}</span>
+          {% endif %}
+        </a>
+        <div class="profile-dropdown-wrap">
+          <a aria-label="Profile" class="icon-btn {% if request.resolver_match.url_name == 'profile' %}nav-link-active{% endif %}" href="{% url 'profile' %}"><span class="material-symbols-outlined">account_circle</span></a>
+          <div class="profile-dropdown">
+            {% if user.is_authenticated %}
+              <div class="dropdown-header">
+                <p class="dropdown-name">{{ user.first_name }} {{ user.last_name }}</p>
+                <p class="dropdown-email">{{ user.email }}</p>
+              </div>
+              <a class="dropdown-item" href="{% url 'profile' %}">
+                <span class="material-symbols-outlined">person</span>
+                My Profile
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item logout-item" href="{% url 'logout' %}">
+                <span class="material-symbols-outlined">logout</span>
+                Logout
+              </a>
+            {% else %}
+              <a class="dropdown-item" href="{% url 'login' %}">
+                <span class="material-symbols-outlined">login</span>
+                Login
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <button class="mobile-menu-btn"><span class="material-symbols-outlined">menu</span></button>
+    </div>
+  </div>
+</header>

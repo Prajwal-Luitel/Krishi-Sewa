@@ -693,6 +693,165 @@
           justify-content: center;
         }
       }
+
+      /* Toast Notification */
+      .toast-container {
+        position: fixed;
+        top: 1.5rem;
+        right: 1.5rem;
+        z-index: 2000;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .toast {
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem 1.25rem;
+        border-radius: 0.75rem;
+        background: var(--surface-light);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        border-left: 4px solid var(--primary);
+        min-width: 320px;
+        max-width: 480px;
+        animation: toastSlideIn 0.4s ease-out;
+      }
+
+      .dark .toast {
+        background: var(--surface-dark);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .toast.toast-error {
+        border-left-color: var(--red-600);
+      }
+
+      @keyframes toastSlideIn {
+        from { opacity: 0; transform: translateX(100%); }
+        to { opacity: 1; transform: translateX(0); }
+      }
+
+      @keyframes toastSlideOut {
+        from { opacity: 1; transform: translateX(0); }
+        to { opacity: 0; transform: translateX(100%); }
+      }
+
+      .toast.hiding {
+        animation: toastSlideOut 0.3s ease-in forwards;
+      }
+
+      .toast-icon-wrapper {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .toast-icon-wrapper.success {
+        background: #d1fae5;
+      }
+
+      .dark .toast-icon-wrapper.success {
+        background: rgba(6, 95, 70, 0.3);
+      }
+
+      .toast-icon-wrapper.error {
+        background: #fee2e2;
+      }
+
+      .dark .toast-icon-wrapper.error {
+        background: rgba(127, 29, 29, 0.3);
+      }
+
+      .toast-icon-wrapper .material-symbols-outlined {
+        font-size: 1.125rem;
+      }
+
+      .toast-icon-wrapper.success .material-symbols-outlined {
+        color: #065f46;
+      }
+
+      .dark .toast-icon-wrapper.success .material-symbols-outlined {
+        color: #34d399;
+      }
+
+      .toast-icon-wrapper.error .material-symbols-outlined {
+        color: #991b1b;
+      }
+
+      .dark .toast-icon-wrapper.error .material-symbols-outlined {
+        color: #f87171;
+      }
+
+      .toast-content {
+        flex: 1;
+      }
+
+      .toast-title {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--text-main);
+      }
+
+      .dark .toast-title {
+        color: var(--white);
+      }
+
+      .toast-message {
+        font-size: 0.8rem;
+        color: var(--gray-500);
+        margin-top: 0.125rem;
+      }
+
+      .dark .toast-message {
+        color: var(--gray-400);
+      }
+
+      .toast-close {
+        background: none;
+        border: none;
+        color: var(--gray-400);
+        cursor: pointer;
+        padding: 0.25rem;
+        display: flex;
+        align-items: center;
+        transition: color 0.2s;
+      }
+
+      .toast-close:hover {
+        color: var(--gray-600);
+      }
+
+      .dark .toast-close:hover {
+        color: var(--gray-200);
+      }
+
+      .toast-progress {
+        position: absolute;
+        bottom: 0;
+        left: 4px;
+        right: 0;
+        height: 3px;
+        background: var(--primary);
+        border-radius: 0 0 0.75rem 0;
+        animation: toastProgress 4s linear forwards;
+      }
+
+      .toast.toast-error .toast-progress {
+        background: var(--red-600);
+      }
+
+      @keyframes toastProgress {
+        from { width: 100%; }
+        to { width: 0%; }
+      }
     </style>
   </head>
 
@@ -740,8 +899,8 @@
           <div class="header-left">
             <button class="menu-button"><span class="material-symbols-outlined">menu</span></button>
             <div class="back-container">
-              <a class="back-link" href="#"><span class="material-symbols-outlined back-icon">arrow_back</span></a>
-              <h2 class="page-title">Add New Product</h2>
+              <a class="back-link" href="{% url 'product' %}"><span class="material-symbols-outlined back-icon">arrow_back</span></a>
+              <h2 class="page-title">{% if product %}Edit Product{% else %}Add New Product{% endif %}</h2>
             </div>
           </div>
 
@@ -758,7 +917,7 @@
         <!-- Main Content Area -->
         <main class="main">
           <div class="form-container">
-            <form class="product-form" method="POST" enctype="multipart/form-data">
+            <form class="product-form" method="POST" enctype="multipart/form-data" action="{% if product %}{% url 'edit_product' product.id %}{% else %}{% url 'addproduct' %}{% endif %}">
               {% csrf_token %}
               <!-- Product Information Section -->
               <div class="form-section">
@@ -770,21 +929,17 @@
                   <div class="form-grid">
                     <div class="form-field">
                       <label class="form-label" for="name">Product Name</label>
-                      <input class="form-input" id="name" name="name" value="{{ old.name }}" placeholder="e.g. Organic Sunflower Seeds" type="text" required />
+                      <input class="form-input" id="name" name="name" value="{% if old %}{{ old.name }}{% elif product %}{{ product.name }}{% endif %}" placeholder="e.g. Organic Sunflower Seeds" type="text" required />
                     </div>
 
                     <div class="form-field">
                       <label class="form-label" for="category">Category</label>
                       <select class="form-select" id="category" name="category" required>
-                        <option disabled selected value="">Select Category</option>
-                        <option value="seeds" {% if old.category == "seeds" %}selected{% endif %}>Seeds</option>
-                        <option value="medicine" {% if old.category == "medicine" %}selected{% endif %}>Agriculture Medicine</option>
-                        <option value="tools" {% if old.category == "tools" %}selected{% endif %}>Tools</option>
-                        <option value="vegetables" {% if old.category == "vegetables" %}selected{% endif %}>Vegetables</option>
-                        <option value="fruits" {% if old.category == "fruits" %}selected{% endif %}>Fruits</option>
-                        <option value="grains" {% if old.category == "grains" %}selected{% endif %}>Grains</option>
-                        <option value="fertilizers" {% if old.category == "fertilizers" %}selected{% endif %}>Fertilizers</option>
-                        <option value="equipment" {% if old.category == "equipment" %}selected{% endif %}>Equipment</option>
+                        <option disabled {% if not old and not product %}selected{% endif %} value="">Select Category</option>
+                        <option value="medicine" {% if old.category == "medicine" %}selected{% elif product and product.category == "medicine" %}selected{% endif %}>Medicine</option>
+                        <option value="seeds" {% if old.category == "seeds" %}selected{% elif product and product.category == "seeds" %}selected{% endif %}>Seeds</option>
+                        <option value="fertilizer" {% if old.category == "fertilizer" %}selected{% elif product and product.category == "fertilizer" %}selected{% endif %}>Fertilizer</option>
+                        <option value="tools" {% if old.category == "tools" %}selected{% elif product and product.category == "tools" %}selected{% endif %}>Tools</option>
                       </select>
                     </div>
 
@@ -792,19 +947,19 @@
                       <label class="form-label" for="selling_price">Price (NPR)</label>
                       <div class="price-input-container">
                         <span class="price-symbol">रू</span>
-                        <input class="form-input price-input" id="selling_price" name="selling_price" value="{{ old.selling_price }}" placeholder="0.00" type="number" min="0" required />
+                        <input class="form-input price-input" id="selling_price" name="selling_price" value="{% if old %}{{ old.selling_price }}{% elif product %}{{ product.selling_price }}{% endif %}" placeholder="0.00" type="number" min="0" required />
                       </div>
                     </div>
 
                     <div class="form-field">
                       <label class="form-label" for="stock">Stock Quantity</label>
-                      <input class="form-input" id="stock" name="stock" value="{{ old.stock }}" placeholder="e.g. 50" type="number" min="0" required />
+                      <input class="form-input" id="stock" name="stock" value="{% if old %}{{ old.stock }}{% elif product %}{{ product.stock }}{% endif %}" placeholder="e.g. 50" type="number" min="0" required />
                     </div>
                   </div>
 
                   <div class="form-field" style="margin-top: 1.5rem;">
                     <label class="form-label" for="description">Description</label>
-                    <textarea class="form-textarea" id="description" name="description" placeholder="Provide a detailed description of the product..." rows="4" required>{{ old.description }}</textarea>
+                    <textarea class="form-textarea" id="description" name="description" placeholder="Provide a detailed description of the product..." rows="4" required>{% if old %}{{ old.description }}{% elif product %}{{ product.description }}{% endif %}</textarea>
                   </div>
                 </div>
               </div>
@@ -818,9 +973,14 @@
                 <div class="section-content">
                   <div class="file-upload-container">
                     <div class="file-upload-area">
+                      {% if product and product.image %}
+                      <img src="{{ product.image.url }}" alt="Current image" style="max-height:10rem;max-width:100%;object-fit:contain;" />
+                      <span class="upload-subtext">Click to change image</span>
+                      {% else %}
                       <span class="material-symbols-outlined upload-icon">add_photo_alternate</span>
                       <span class="upload-text">Click to upload or drag & drop</span>
                       <span class="upload-subtext">PNG, JPG up to 5MB</span>
+                      {% endif %}
                     </div>
                     <input class="file-input" accept="image/*" type="file" id="product_image" name="product_image" />
                   </div>
@@ -837,20 +997,20 @@
                   <div class="form-grid">
                     <div class="form-field">
                       <label class="form-label" for="brand">Brand/Manufacturer</label>
-                      <input class="form-input" id="brand" name="brand" value="{{ old.brand }}" placeholder="e.g. Organic Farms Ltd." type="text" />
+                      <input class="form-input" id="brand" name="brand" value="{% if old %}{{ old.brand }}{% elif product %}{{ product.brand }}{% endif %}" placeholder="e.g. Organic Farms Ltd." type="text" />
                     </div>
 
                     <div class="form-field">
                       <label class="form-label" for="unit">Unit of Measurement</label>
                       <select class="form-select" id="unit" name="unit">
-                        <option value="kg" {% if old.unit == "kg" %}selected{% endif %}>Kilogram (kg)</option>
-                        <option value="g" {% if old.unit == "g" %}selected{% endif %}>Gram (g)</option>
-                        <option value="l" {% if old.unit == "l" %}selected{% endif %}>Liter (L)</option>
-                        <option value="ml" {% if old.unit == "ml" %}selected{% endif %}>Milliliter (ml)</option>
-                        <option value="piece" {% if old.unit == "piece" %}selected{% endif %}>Piece</option>
-                        <option value="packet" {% if old.unit == "packet" %}selected{% endif %}>Packet</option>
-                        <option value="bag" {% if old.unit == "bag" %}selected{% endif %}>Bag</option>
-                        <option value="box" {% if old.unit == "box" %}selected{% endif %}>Box</option>
+                        <option value="kg" {% if old.unit == "kg" %}selected{% elif product and product.measurement_unit == "kg" %}selected{% endif %}>Kilogram (kg)</option>
+                        <option value="g" {% if old.unit == "g" %}selected{% elif product and product.measurement_unit == "g" %}selected{% endif %}>Gram (g)</option>
+                        <option value="l" {% if old.unit == "l" %}selected{% elif product and product.measurement_unit == "l" %}selected{% endif %}>Liter (L)</option>
+                        <option value="ml" {% if old.unit == "ml" %}selected{% elif product and product.measurement_unit == "ml" %}selected{% endif %}>Milliliter (ml)</option>
+                        <option value="piece" {% if old.unit == "piece" %}selected{% elif product and product.measurement_unit == "piece" %}selected{% endif %}>Piece</option>
+                        <option value="packet" {% if old.unit == "packet" %}selected{% elif product and product.measurement_unit == "packet" %}selected{% endif %}>Packet</option>
+                        <option value="bag" {% if old.unit == "bag" %}selected{% elif product and product.measurement_unit == "bag" %}selected{% endif %}>Bag</option>
+                        <option value="box" {% if old.unit == "box" %}selected{% elif product and product.measurement_unit == "box" %}selected{% endif %}>Box</option>
                       </select>
                     </div>
                 </div>
@@ -861,7 +1021,7 @@
                 <button class="cancel-button" type="button">Cancel</button>
                 <button class="submit-button" type="submit">
                   <span class="material-symbols-outlined submit-icon">save</span>
-                  Save Product
+                  {% if product %}Update Product{% else %}Save Product{% endif %}
                 </button>
               </div>
             </form>
@@ -883,9 +1043,7 @@
         // Cancel button
         cancelButton.addEventListener('click', function () {
           if (confirm('Are you sure you want to cancel? All unsaved changes will be lost.')) {
-            form.reset()
-            // In a real application, you might redirect to the product list page
-            console.log('Form cancelled')
+            window.location.href = "{% url 'product' %}";
           }
         })
       
@@ -943,6 +1101,39 @@
           }
         })
       })
+    </script>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer">
+      {% for message in messages %}
+      <div class="toast {% if message.tags == 'error' %}toast-error{% endif %}">
+        <div class="toast-icon-wrapper {% if message.tags == 'error' %}error{% else %}success{% endif %}">
+          <span class="material-symbols-outlined">{% if message.tags == 'error' %}error{% else %}check_circle{% endif %}</span>
+        </div>
+        <div class="toast-content">
+          <p class="toast-title">{% if message.tags == 'error' %}Error{% else %}Success{% endif %}</p>
+          <p class="toast-message">{{ message }}</p>
+        </div>
+        <button class="toast-close" onclick="dismissToast(this)">
+          <span class="material-symbols-outlined" style="font-size:1.125rem;">close</span>
+        </button>
+        <div class="toast-progress"></div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <script>
+      function dismissToast(btn) {
+        const toast = btn.closest('.toast');
+        toast.classList.add('hiding');
+        setTimeout(() => toast.remove(), 300);
+      }
+      document.querySelectorAll('.toast').forEach(function(toast) {
+        setTimeout(function() {
+          toast.classList.add('hiding');
+          setTimeout(() => toast.remove(), 300);
+        }, 4000);
+      });
     </script>
   </body>
 </html>

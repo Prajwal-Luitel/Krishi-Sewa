@@ -1,12 +1,19 @@
 # Create your views here.
-from django.shortcuts import render
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Product
 
 def product(request):
     products = Product.objects.all()
-    context = {"products": products}
+    total_products = products.count()
+    in_stock_count = products.filter(stock__gt=0).count()
+    out_of_stock_count = products.filter(stock=0).count()
+    context = {
+        "products": products,
+        "total_products": total_products,
+        "in_stock_count": in_stock_count,
+        "out_of_stock_count": out_of_stock_count,
+    }
     return render(request, "product.html", context=context)
 
 def sales(request):
@@ -56,3 +63,37 @@ def add_product(request):
     
     # If GET request, just render the form
     return render(request, 'addproduct.html')
+
+
+def edit_product(request, product_id):
+    prod = get_object_or_404(Product, id=product_id)
+    if request.method == 'POST':
+        try:
+            prod.name = request.POST.get('name')
+            prod.description = request.POST.get('description')
+            prod.category = request.POST.get('category')
+            prod.selling_price = request.POST.get('selling_price')
+            prod.stock = request.POST.get('stock')
+            prod.brand = request.POST.get('brand', '')
+            prod.measurement_unit = request.POST.get('unit', 'kg')
+            image = request.FILES.get('product_image')
+            if image:
+                prod.image = image
+            prod.save()
+            messages.success(request, f'Product "{prod.name}" updated successfully!')
+            return redirect('product')
+        except Exception as e:
+            messages.error(request, f'Error updating product: {str(e)}')
+            context = {'product': prod, 'old': request.POST}
+            return render(request, 'addproduct.html', context=context)
+    context = {'product': prod}
+    return render(request, 'addproduct.html', context=context)
+
+
+def delete_product(request, product_id):
+    if request.method == 'POST':
+        prod = get_object_or_404(Product, id=product_id)
+        name = prod.name
+        prod.delete()
+        messages.success(request, f'Product "{name}" deleted successfully!')
+    return redirect('product')

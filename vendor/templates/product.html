@@ -906,6 +906,326 @@
       .dark .stat-value {
         color: var(--white);
       }
+
+      /* Delete Confirmation Modal */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-overlay.active {
+        display: flex;
+      }
+
+      .modal {
+        background: var(--surface-light);
+        border-radius: 1rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        width: 90%;
+        max-width: 420px;
+        padding: 2rem;
+        text-align: center;
+        animation: modalSlideIn 0.25s ease-out;
+      }
+
+      .dark .modal {
+        background: var(--surface-dark);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      }
+
+      @keyframes modalSlideIn {
+        from {
+          opacity: 0;
+          transform: scale(0.95) translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+
+      .modal-icon {
+        width: 3.5rem;
+        height: 3.5rem;
+        border-radius: 50%;
+        background: var(--red-100);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+      }
+
+      .dark .modal-icon {
+        background: rgba(127, 29, 29, 0.3);
+      }
+
+      .modal-icon .material-symbols-outlined {
+        font-size: 1.5rem;
+        color: var(--red-600);
+      }
+
+      .dark .modal-icon .material-symbols-outlined {
+        color: var(--red-400);
+      }
+
+      .modal-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: var(--text-main);
+        margin-bottom: 0.5rem;
+      }
+
+      .dark .modal-title {
+        color: var(--white);
+      }
+
+      .modal-message {
+        font-size: 0.875rem;
+        color: var(--gray-500);
+        line-height: 1.5;
+        margin-bottom: 1.5rem;
+      }
+
+      .dark .modal-message {
+        color: var(--gray-400);
+      }
+
+      .modal-product-name {
+        font-weight: 600;
+        color: var(--text-main);
+      }
+
+      .dark .modal-product-name {
+        color: var(--white);
+      }
+
+      .modal-actions {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+
+      .modal-btn {
+        padding: 0.625rem 1.5rem;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: none;
+      }
+
+      .modal-btn-cancel {
+        background: var(--white);
+        color: var(--gray-700);
+        border: 1px solid var(--gray-200);
+      }
+
+      .modal-btn-cancel:hover {
+        background: var(--gray-100);
+      }
+
+      .dark .modal-btn-cancel {
+        background: var(--surface-dark);
+        color: var(--gray-300);
+        border: 1px solid var(--gray-700);
+      }
+
+      .dark .modal-btn-cancel:hover {
+        background: var(--gray-800);
+      }
+
+      .modal-btn-delete {
+        background: var(--red-600);
+        color: var(--white);
+      }
+
+      .modal-btn-delete:hover {
+        background: #b91c1c;
+      }
+
+      /* Success Toast Notification */
+      .toast-container {
+        position: fixed;
+        top: 1.5rem;
+        right: 1.5rem;
+        z-index: 2000;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .toast {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem 1.25rem;
+        border-radius: 0.75rem;
+        background: var(--surface-light);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        border-left: 4px solid var(--primary);
+        min-width: 320px;
+        max-width: 480px;
+        animation: toastSlideIn 0.4s ease-out;
+      }
+
+      .dark .toast {
+        background: var(--surface-dark);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .toast.toast-error {
+        border-left-color: var(--red-600);
+      }
+
+      @keyframes toastSlideIn {
+        from {
+          opacity: 0;
+          transform: translateX(100%);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes toastSlideOut {
+        from {
+          opacity: 1;
+          transform: translateX(0);
+        }
+        to {
+          opacity: 0;
+          transform: translateX(100%);
+        }
+      }
+
+      .toast.hiding {
+        animation: toastSlideOut 0.3s ease-in forwards;
+      }
+
+      .toast-icon-wrapper {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .toast-icon-wrapper.success {
+        background: var(--green-100);
+      }
+
+      .dark .toast-icon-wrapper.success {
+        background: rgba(6, 95, 70, 0.3);
+      }
+
+      .toast-icon-wrapper.error {
+        background: var(--red-100);
+      }
+
+      .dark .toast-icon-wrapper.error {
+        background: rgba(127, 29, 29, 0.3);
+      }
+
+      .toast-icon-wrapper .material-symbols-outlined {
+        font-size: 1.125rem;
+      }
+
+      .toast-icon-wrapper.success .material-symbols-outlined {
+        color: var(--green-800);
+      }
+
+      .dark .toast-icon-wrapper.success .material-symbols-outlined {
+        color: var(--green-400);
+      }
+
+      .toast-icon-wrapper.error .material-symbols-outlined {
+        color: var(--red-800);
+      }
+
+      .dark .toast-icon-wrapper.error .material-symbols-outlined {
+        color: var(--red-400);
+      }
+
+      .toast-content {
+        flex: 1;
+      }
+
+      .toast-title {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--text-main);
+      }
+
+      .dark .toast-title {
+        color: var(--white);
+      }
+
+      .toast-message {
+        font-size: 0.8rem;
+        color: var(--gray-500);
+        margin-top: 0.125rem;
+      }
+
+      .dark .toast-message {
+        color: var(--gray-400);
+      }
+
+      .toast-close {
+        background: none;
+        border: none;
+        color: var(--gray-400);
+        cursor: pointer;
+        padding: 0.25rem;
+        display: flex;
+        align-items: center;
+        transition: color 0.2s;
+      }
+
+      .toast-close:hover {
+        color: var(--gray-600);
+      }
+
+      .dark .toast-close:hover {
+        color: var(--gray-200);
+      }
+
+      .toast-progress {
+        position: absolute;
+        bottom: 0;
+        left: 4px;
+        right: 0;
+        height: 3px;
+        background: var(--primary);
+        border-radius: 0 0 0.75rem 0;
+        animation: toastProgress 4s linear forwards;
+      }
+
+      .toast.toast-error .toast-progress {
+        background: var(--red-600);
+      }
+
+      @keyframes toastProgress {
+        from { width: 100%; }
+        to { width: 0%; }
+      }
+
+      .toast {
+        position: relative;
+        overflow: hidden;
+      }
     </style>
   </head>
   <body class="light">
@@ -978,10 +1298,10 @@
                 Filter
               </button>
             </div>
-            <button class="add-product-button">
+            <a class="add-product-button" href="{% url 'addproduct' %}" style="text-decoration:none;">
               <span class="material-symbols-outlined">add</span>
               Add New Product
-            </button>
+            </a>
           </div>
 
           <!-- Products Table -->
@@ -992,6 +1312,7 @@
                   <tr>
                     <th>Product Name</th>
                     <th>Category</th>
+                    <th>Brand</th>
                     <th>Price (₹)</th>
                     <th>Stock</th>
                     <th>Status</th>
@@ -1018,7 +1339,9 @@
                         </div>
                       </td>
 
-                      <td class="category-cell">{{ product.category }}</td>
+                      <td class="category-cell">{{ product.get_category_display }}</td>
+
+                      <td class="category-cell">{{ product.brand|default:"-" }}</td>
 
                       <td class="price-cell">{{ product.selling_price }}</td>
 
@@ -1034,147 +1357,20 @@
 
                       <td class="actions-cell">
                         <div class="actions-container">
-                          <button class="action-button edit-button" title="Edit"><span class="material-symbols-outlined action-icon">edit</span></button>
-                          <button class="action-button delete-button" title="Delete"><span class="material-symbols-outlined action-icon">delete</span></button>
+                          <a class="action-button edit-button" href="{% url 'edit_product' product.id %}" title="Edit"><span class="material-symbols-outlined action-icon">edit</span></a>
+                          <button class="action-button delete-button" type="button" title="Delete" onclick="openDeleteModal('{{ product.name|escapejs }}', '{% url 'delete_product' product.id %}')"><span class="material-symbols-outlined action-icon">delete</span></button>
                         </div>
                       </td>
                     </tr>
                   {% endfor %}
 
-                  <!-- Product 1 -->
-                  <tr class="table-row">
-                    <td>
-                      <div class="product-cell">
-                        <div class="product-icon">🌾</div>
-                        <div class="product-info">
-                          <p class="product-name">High-Yield Rice Seeds</p>
-                          <p class="product-id">ID: #KS-3101</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="category-cell">Seeds</td>
-                    <td class="price-cell">1250.00</td>
-                    <td class="stock-cell">500 kg</td>
-                    <td>
-                      <span class="status-badge status-in-stock">In Stock</span>
-                    </td>
-                    <td class="actions-cell">
-                      <div class="actions-container">
-                        <button class="action-button edit-button" title="Edit"><span class="material-symbols-outlined action-icon">edit</span></button>
-                        <button class="action-button delete-button" title="Delete"><span class="material-symbols-outlined action-icon">delete</span></button>
-                      </div>
-                    </td>
-                  </tr>
 
-                  <!-- Product 2 -->
-                  <tr class="table-row">
-                    <td>
-                      <div class="product-cell">
-                        <div class="product-icon">🧴</div>
-                        <div class="product-info">
-                          <p class="product-name">Nitrogen Bio-Fertilizer</p>
-                          <p class="product-id">ID: #KS-3102</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="category-cell">Agriculture Medicine</td>
-                    <td class="price-cell">450.00</td>
-                    <td class="stock-cell">200 L</td>
-                    <td>
-                      <span class="status-badge status-in-stock">In Stock</span>
-                    </td>
-                    <td class="actions-cell">
-                      <div class="actions-container">
-                        <button class="action-button edit-button" title="Edit"><span class="material-symbols-outlined action-icon">edit</span></button>
-                        <button class="action-button delete-button" title="Delete"><span class="material-symbols-outlined action-icon">delete</span></button>
-                      </div>
-                    </td>
-                  </tr>
-
-                  <!-- Product 3 -->
-                  <tr class="table-row">
-                    <td>
-                      <div class="product-cell">
-                        <div class="product-icon">⛏️</div>
-                        <div class="product-info">
-                          <p class="product-name">Heavy Duty Hoe (Kudal)</p>
-                          <p class="product-id">ID: #KS-3103</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="category-cell">Tools</td>
-                    <td class="price-cell">350.00</td>
-                    <td class="stock-cell">45 units</td>
-                    <td>
-                      <span class="status-badge status-in-stock">In Stock</span>
-                    </td>
-                    <td class="actions-cell">
-                      <div class="actions-container">
-                        <button class="action-button edit-button" title="Edit"><span class="material-symbols-outlined action-icon">edit</span></button>
-                        <button class="action-button delete-button" title="Delete"><span class="material-symbols-outlined action-icon">delete</span></button>
-                      </div>
-                    </td>
-                  </tr>
-
-                  <!-- Product 4 -->
-                  <tr class="table-row">
-                    <td>
-                      <div class="product-cell">
-                        <div class="product-icon">🌻</div>
-                        <div class="product-info">
-                          <p class="product-name">Sunflower Hybrid Seeds</p>
-                          <p class="product-id">ID: #KS-3104</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="category-cell">Seeds</td>
-                    <td class="price-cell">420.00</td>
-                    <td class="stock-cell">15 kg</td>
-                    <td>
-                      <span class="status-badge status-low-stock">Low Stock</span>
-                    </td>
-                    <td class="actions-cell">
-                      <div class="actions-container">
-                        <button class="action-button edit-button" title="Edit"><span class="material-symbols-outlined action-icon">edit</span></button>
-                        <button class="action-button delete-button" title="Delete"><span class="material-symbols-outlined action-icon">delete</span></button>
-                      </div>
-                    </td>
-                  </tr>
-
-                  <!-- Product 5 -->
-                  <tr class="table-row">
-                    <td>
-                      <div class="product-cell">
-                        <div class="product-icon">🧤</div>
-                        <div class="product-info">
-                          <p class="product-name">Protective Farm Gloves</p>
-                          <p class="product-id">ID: #KS-3105</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="category-cell">Tools</td>
-                    <td class="price-cell">120.00</td>
-                    <td class="stock-cell">0 units</td>
-                    <td>
-                      <span class="status-badge status-out-of-stock">Out of Stock</span>
-                    </td>
-                    <td class="actions-cell">
-                      <div class="actions-container">
-                        <button class="action-button edit-button" title="Edit"><span class="material-symbols-outlined action-icon">edit</span></button>
-                        <button class="action-button delete-button" title="Delete"><span class="material-symbols-outlined action-icon">delete</span></button>
-                      </div>
-                    </td>
-                  </tr>
                 </tbody>
               </table>
             </div>
 
             <div class="table-footer">
-              <span class="pagination-info">Showing <span>1</span> to <span>5</span> of <span>48</span> products</span>
-              <div class="pagination-controls">
-                <button class="pagination-button" disabled>Previous</button>
-                <button class="pagination-button next">Next</button>
-              </div>
+              <span class="pagination-info">Showing <span>{{ products|length }}</span> products</span>
             </div>
           </div>
 
@@ -1184,15 +1380,15 @@
               <span class="stat-label">Total Products</span>
               <div class="stat-content">
                 <span class="material-symbols-outlined stat-icon primary">inventory_2</span>
-                <h4 class="stat-value">48</h4>
+                <h4 class="stat-value">{{ total_products }}</h4>
               </div>
             </div>
 
             <div class="stat-card">
-              <span class="stat-label">Active Listings</span>
+              <span class="stat-label">In Stock</span>
               <div class="stat-content">
                 <span class="material-symbols-outlined stat-icon green">check_circle</span>
-                <h4 class="stat-value">42</h4>
+                <h4 class="stat-value">{{ in_stock_count }}</h4>
               </div>
             </div>
 
@@ -1200,12 +1396,86 @@
               <span class="stat-label">Out of Stock</span>
               <div class="stat-content">
                 <span class="material-symbols-outlined stat-icon red">warning</span>
-                <h4 class="stat-value">6</h4>
+                <h4 class="stat-value">{{ out_of_stock_count }}</h4>
               </div>
             </div>
           </div>
         </main>
       </div>
     </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-overlay" id="deleteModal">
+      <div class="modal">
+        <div class="modal-icon">
+          <span class="material-symbols-outlined">warning</span>
+        </div>
+        <h3 class="modal-title">Delete Product</h3>
+        <p class="modal-message">Are you sure you want to delete <span class="modal-product-name" id="deleteProductName"></span>? This action cannot be undone.</p>
+        <div class="modal-actions">
+          <button class="modal-btn modal-btn-cancel" onclick="closeDeleteModal()">Cancel</button>
+          <form id="deleteForm" method="POST" style="display:inline;">
+            {% csrf_token %}
+            <button class="modal-btn modal-btn-delete" type="submit">Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer">
+      {% for message in messages %}
+      <div class="toast {% if message.tags == 'error' %}toast-error{% endif %}">
+        <div class="toast-icon-wrapper {% if message.tags == 'error' %}error{% else %}success{% endif %}">
+          <span class="material-symbols-outlined">{% if message.tags == 'error' %}error{% else %}check_circle{% endif %}</span>
+        </div>
+        <div class="toast-content">
+          <p class="toast-title">{% if message.tags == 'error' %}Error{% else %}Success{% endif %}</p>
+          <p class="toast-message">{{ message }}</p>
+        </div>
+        <button class="toast-close" onclick="dismissToast(this)">
+          <span class="material-symbols-outlined" style="font-size:1.125rem;">close</span>
+        </button>
+        <div class="toast-progress"></div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <script>
+      // Delete modal
+      function openDeleteModal(productName, deleteUrl) {
+        document.getElementById('deleteProductName').textContent = productName;
+        document.getElementById('deleteForm').action = deleteUrl;
+        document.getElementById('deleteModal').classList.add('active');
+      }
+
+      function closeDeleteModal() {
+        document.getElementById('deleteModal').classList.remove('active');
+      }
+
+      // Close modal on overlay click
+      document.getElementById('deleteModal').addEventListener('click', function(e) {
+        if (e.target === this) closeDeleteModal();
+      });
+
+      // Close modal on Escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeDeleteModal();
+      });
+
+      // Toast auto-dismiss
+      function dismissToast(btn) {
+        const toast = btn.closest('.toast');
+        toast.classList.add('hiding');
+        setTimeout(() => toast.remove(), 300);
+      }
+
+      document.querySelectorAll('.toast').forEach(function(toast) {
+        setTimeout(function() {
+          toast.classList.add('hiding');
+          setTimeout(() => toast.remove(), 300);
+        }, 4000);
+      });
+    </script>
   </body>
 </html>

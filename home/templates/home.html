@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Krishi Sewa - Modern Farming Solutions</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary: #13ec13;
+            --primary-dark: #0ea00e;
+            --nav-bg: #064e3b;
+            --background-light: #f3fdf3;
+            --background-dark: #021202;
+            --surface-light: #ffffff;
+            --surface-dark: #0a260a;
+            --text-main: #0d1b0d;
+            --text-muted: #5c8a5c;
+            --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+            --shadow-glow: 0 0 15px rgba(19, 236, 19, 0.3);
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-main);
+            transition: background-color 0.2s, color 0.2s;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #13ec13;
+        }
+
+        /* ===================== PAGE WRAPPER ===================== */
+        .page-wrapper {
+            position: relative;
+            display: flex;
+            min-height: 100vh;
+            width: 100%;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* ===================== MAIN ===================== */
+        main {
+            flex-grow: 1;
+        }
+
+        /* ===================== HERO SECTION ===================== */
+        .hero-section {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            background-color: var(--background-light);
+            padding: 32px 0 48px;
+        }
+
+        .hero-inner {
+            margin: 0 auto;
+            max-width: 1280px;
+            padding: 0 16px;
+        }
+
+        @media (min-width: 640px) {
+            .hero-inner {
+                padding: 0 24px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .hero-inner {
+                padding: 0 32px;
+            }
+        }
+
+        .hero-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 24px;
+            background: #111827;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            outline: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+        }
+
+        .hero-bg img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+            opacity: 0.7;
+            mix-blend-mode: overlay;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6), transparent);
+        }
+
+        .hero-content {
+            position: relative;
+            padding: 80px 32px;
+        }
+
+        @media (min-width: 640px) {
+            .hero-content {
+                padding: 128px 64px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .hero-content {
+                padding: 160px 64px;
+            }
+        }
+
+        .hero-text-wrap {
+            max-width: 672px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border-radius: 9999px;
+            background: rgba(19, 236, 19, 0.2);
+            backdrop-filter: blur(12px);
+            padding: 4px 12px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 24px;
+            border: 1px solid rgba(19, 236, 19, 0.3);
+        }
+
+        .hero-badge .material-symbols-outlined {
+            font-size: 14px;
+        }
+
+        .hero-heading {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            color: #ffffff;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        @media (min-width: 640px) {
+            .hero-heading {
+                font-size: 60px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .hero-heading {
+                font-size: 72px;
+            }
+        }
+
+        .hero-heading-gradient {
+            background: linear-gradient(to right, var(--primary), #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtext {
+            margin-top: 16px;
+            max-width: 576px;
+            font-size: 20px;
+            color: #d1d5db;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .btn-shop-now {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            background: var(--primary);
+            padding: 16px 32px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #000000;
+            border: none;
+            cursor: pointer;
+            font-family: 'Space Grotesk', sans-serif;
+            box-shadow: var(--shadow-glow);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .btn-shop-now:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .btn-diagnose {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            padding: 16px 32px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            font-family: 'Space Grotesk', sans-serif;
+            transition: background-color 0.3s;
+        }
+
+        .btn-diagnose:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-diagnose .material-symbols-outlined {
+            margin-right: 8px;
+            font-size: 20px;
+        }
+
+        /* ===================== FEATURED PRODUCTS ===================== */
+        .featured-section {
+            padding: 64px 0;
+            background-color: var(--background-light);
+        }
+
+        .featured-inner {
+            margin: 0 auto;
+            max-width: 1280px;
+            padding: 0 16px;
+        }
+
+        @media (min-width: 640px) {
+            .featured-inner {
+                padding: 0 24px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .featured-inner {
+                padding: 0 32px;
+            }
+        }
+
+        .featured-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+
+        .featured-heading {
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.025em;
+        }
+
+        @media (min-width: 768px) {
+            .featured-heading {
+                font-size: 36px;
+            }
+        }
+
+        .featured-subtext {
+            margin-top: 8px;
+            color: #4b5563;
+            font-size: 14px;
+        }
+
+        .view-all-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .view-all-link:hover {
+            color: var(--primary-dark);
+        }
+
+        .view-all-link .material-symbols-outlined {
+            font-size: 14px;
+            transition: transform 0.2s;
+        }
+
+        .view-all-link:hover .material-symbols-outlined {
+            transform: translateX(4px);
+        }
+
+        /* Product grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px 24px;
+        }
+
+        @media (min-width: 640px) {
+            .product-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .product-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .product-grid {
+                gap: 40px 32px;
+            }
+        }
+
+        .product-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border-radius: 16px;
+            background: var(--surface-light);
+            box-shadow: var(--shadow-soft);
+            border: 1px solid #f3f4f6;
+            transition: box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .product-image-wrap {
+            position: relative;
+            width: 100%;
+            padding-top: 100%;
+            background: #f3f4f6;
+            overflow: hidden;
+        }
+
+        .product-image-wrap img {
+            position: absolute;
+            inset: 0;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .product-image-wrap img {
+            transform: scale(1.1);
+        }
+
+        .product-body {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .product-seller {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .seller-icon-wrap {
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e5e7eb;
+        }
+
+        .seller-icon-wrap .material-symbols-outlined {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .seller-name {
+            font-size: 12px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .product-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .product-title a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .product-title a::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+        }
+
+        .product-category-badge {
+            display: inline-block;
+            background: #e8f5e9;
+            color: #2e7d32;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 12px;
+            margin-bottom: 4px;
+        }
+
+        .product-subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .product-footer {
+            margin-top: auto;
+            padding-top: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .product-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .btn-add-cart {
+            position: relative;
+            z-index: 10;
+            height: 40px;
+            width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #000000;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .btn-add-cart:hover {
+            background: var(--primary);
+            color: #000000;
+        }
+
+        .btn-add-cart .material-symbols-outlined {
+            font-size: 20px;
+        }
+
+        /* ===================== DETECT SECTION ===================== */
+        .detect-section {
+            padding: 80px 0;
+            background: #ffffff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .detect-dot-bg {
+            position: absolute;
+            inset: 0;
+            opacity: 0.05;
+            background-image: radial-gradient(#13ec13 1px, transparent 1px);
+            background-size: 16px 16px;
+        }
+
+        .detect-inner {
+            margin: 0 auto;
+            max-width: 1280px;
+            padding: 0 16px;
+            position: relative;
+            z-index: 10;
+        }
+
+        @media (min-width: 640px) {
+            .detect-inner {
+                padding: 0 24px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .detect-inner {
+                padding: 0 32px;
+            }
+        }
+
+        .detect-layout {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 64px;
+        }
+
+        @media (min-width: 1024px) {
+            .detect-layout {
+                flex-direction: row;
+            }
+        }
+
+        .detect-image-col {
+            width: 100%;
+        }
+
+        @media (min-width: 1024px) {
+            .detect-image-col {
+                width: 50%;
+            }
+        }
+
+        .detect-image-wrap {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            outline: 8px solid #f9fafb;
+            transform: translateZ(0);
+            transition: transform 0.3s;
+        }
+
+        .detect-image-wrap:hover {
+            transform: scale(1.01);
+        }
+
+        .detect-image-wrap img {
+            width: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Detection badge - top right */
+        .detect-badge-top {
+            position: absolute;
+            top: 32px;
+            right: 32px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(4px);
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #f3f4f6;
+            animation: bounce-slow 3s infinite;
+        }
+
+        @keyframes bounce-slow {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .detect-badge-top-inner {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .detect-badge-icon {
+            background: #fee2e2;
+            padding: 8px;
+            border-radius: 50%;
+            color: #dc2626;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .detect-badge-icon .material-symbols-outlined {
+            font-size: 20px;
+        }
+
+        .detect-badge-label {
+            font-size: 12px;
+            color: #6b7280;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .detect-badge-value {
+            font-size: 14px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        /* Detection badge - bottom left */
+        .detect-badge-bottom {
+            position: absolute;
+            bottom: 32px;
+            left: 32px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .detect-badge-bottom-inner {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .detect-badge-bottom .material-symbols-outlined {
+            color: var(--primary);
+            font-size: 30px;
+        }
+
+        .detect-accuracy {
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .detect-ai-label {
+            font-size: 14px;
+            color: #d1d5db;
+        }
+
+        /* Detect text col */
+        .detect-text-col {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        @media (min-width: 1024px) {
+            .detect-text-col {
+                width: 50%;
+            }
+        }
+
+        .ai-badge {
+            display: inline-flex;
+            width: fit-content;
+            align-items: center;
+            gap: 8px;
+            border-radius: 9999px;
+            background: #dcfce7;
+            padding: 6px 16px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #15803d;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .ai-badge-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #16a34a;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .detect-heading {
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            color: #111827;
+            line-height: 1.2;
+        }
+
+        @media (min-width: 640px) {
+            .detect-heading {
+                font-size: 48px;
+            }
+        }
+
+        .detect-heading-accent {
+            color: var(--primary);
+        }
+
+        .detect-body {
+            font-size: 18px;
+            color: #4b5563;
+            line-height: 1.6;
+        }
+
+        .detect-cta-row {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        @media (min-width: 640px) {
+            .detect-cta-row {
+                flex-direction: row;
+            }
+        }
+
+        .btn-start-detection {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border-radius: 9999px;
+            background: #000000;
+            color: #ffffff;
+            padding: 16px 32px;
+            font-size: 16px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            font-family: 'Space Grotesk', sans-serif;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.2s;
+        }
+
+        .btn-start-detection:hover {
+            background: #1f2937;
+        }
+
+        .btn-start-detection .material-symbols-outlined {
+            transition: transform 0.2s;
+        }
+
+        .btn-start-detection:hover .material-symbols-outlined {
+            transform: translateY(-4px);
+        }
+
+        /* Stats */
+        .detect-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 32px;
+            border-top: 1px solid #f3f4f6;
+            padding-top: 32px;
+        }
+
+        .detect-stat-value {
+            font-size: 30px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .detect-stat-label {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        /* ===================== INFO CARDS SECTION ===================== */
+        .info-section {
+            padding: 80px 0;
+            background-color: var(--background-light);
+        }
+
+        .info-inner {
+            margin: 0 auto;
+            max-width: 1280px;
+            padding: 0 16px;
+        }
+
+        @media (min-width: 640px) {
+            .info-inner {
+                padding: 0 24px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .info-inner {
+                padding: 0 32px;
+            }
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+        }
+
+        @media (min-width: 768px) {
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Mission card */
+        .info-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-radius: 24px;
+            padding: 40px;
+            transition: box-shadow 0.2s, border-color 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .info-card-green {
+            background: #f0fdf4;
+        }
+
+        .info-card-green:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-color: rgba(19, 236, 19, 0.2);
+        }
+
+        .info-card-gray {
+            background: #f3f4f6;
+        }
+
+        .info-card-gray:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-color: #9ca3af;
+        }
+
+        .info-card-content {
+            /* top portion */
+        }
+
+        .info-card-icon {
+            display: inline-flex;
+            border-radius: 16px;
+            background: #ffffff;
+            padding: 16px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .info-card:hover .info-card-icon {
+            transform: scale(1.1);
+        }
+
+        .info-card-icon-green .material-symbols-outlined {
+            font-size: 30px;
+            color: var(--primary);
+        }
+
+        .info-card-icon-dark .material-symbols-outlined {
+            font-size: 30px;
+            color: #111827;
+        }
+
+        .info-card-title {
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 16px;
+        }
+
+        .info-card-body {
+            font-size: 18px;
+            color: #4b5563;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        .info-card-link {
+            display: inline-flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 18px;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .info-card-link-green {
+            color: var(--primary);
+        }
+
+        .info-card-link-green:hover {
+            color: #15803d;
+        }
+
+        .info-card-link-dark {
+            color: #111827;
+        }
+
+        .info-card-link-dark:hover {
+            color: var(--primary);
+        }
+
+        .info-card-link .material-symbols-outlined {
+            margin-left: 8px;
+            transition: transform 0.2s;
+            font-size: 20px;
+        }
+
+        .info-card:hover .info-card-link .material-symbols-outlined {
+            transform: translateX(4px);
+        }
+
+    </style>
+</head>
+
+<body>
+    {% load static %}
+    <div class="page-wrapper">
+
+        {% include 'nav.html' %}
+
+        <!-- MAIN -->
+        <main>
+
+            <!-- HERO -->
+            <section class="hero-section">
+                <div class="hero-inner">
+                    <div class="hero-card">
+                        <div class="hero-bg">
+                            <img alt="Farmer checking corn crops in a sunny field"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDB4nolEqEjw0QCfyuPW7-bjKfcnp-uWJ1B6pqsUhv9S2b7L2QpdtvKWIcVKdlwAJYnza99penxjhLj1FuH4BsnNnwLlY1CuEq3rA-NIsSFEkGU2e3MBlcTTmCwq2suubNgH9G-t_k6RZqFouJvM3jvuHpcOjzYyUe21PYOdAV7kNEdFiU483K1fStm_ZJyPrWLjlGr_clLpyFM2jkWCC78KK3yTKu4Vqd0BtWL63gJC1lvyo7XHgJY4JbWBjxcDUR8tC3TmgdYzJ8" />
+                            <div class="hero-overlay"></div>
+                        </div>
+                        <div class="hero-content">
+                            <div class="hero-text-wrap">
+                                <div class="hero-badge">
+                                    <span class="material-symbols-outlined">rocket_launch</span>
+                                    Future of Farming
+                                </div>
+                                <h1 class="hero-heading">
+                                    Smart Farming <br />
+                                    <span class="hero-heading-gradient">Made Simple</span>
+                                </h1>
+                                <p class="hero-subtext">
+                                    Detect plant diseases instantly with AI, shop quality agricultural products, and
+                                    join a community of modern farmers.
+                                </p>
+                                <div class="hero-buttons">
+                                    <button class="btn-shop-now">Shop Now</button>
+                                    <button class="btn-diagnose">
+                                        <span class="material-symbols-outlined">photo_camera</span>
+                                        Diagnose Plant
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FEATURED PRODUCTS -->
+            <section class="featured-section">
+                <div class="featured-inner">
+                    <div class="featured-header">
+                        <div>
+                            <h2 class="featured-heading">Featured Products</h2>
+                            <p class="featured-subtext">Handpicked essentials for your farm.</p>
+                        </div>
+                        <a class="view-all-link" href="{% url 'products' %}">
+                            View All Products <span class="material-symbols-outlined">arrow_forward</span>
+                        </a>
+                    </div>
+
+                    <div class="product-grid">
+
+                        {% for product in products %}
+                        <div class="product-card">
+                            <div class="product-image-wrap">
+                                {% if product.image %}
+                                <img alt="{{ product.name }}" src="{{ product.image.url }}" />
+                                {% else %}
+                                <img alt="No image available" src="https://via.placeholder.com/300x200" />
+                                {% endif %}
+                            </div>
+                            <div class="product-body">
+                                <div class="product-seller">
+                                    <div class="seller-icon-wrap">
+                                        <span class="material-symbols-outlined">store</span>
+                                    </div>
+                                    <span class="seller-name">{{ product.brand }}</span>
+                                </div>
+                                <h3 class="product-title"><a href="#"><span aria-hidden="true"
+                                            style="position:absolute;inset:0;"></span>{{ product.name }}</a></h3>
+                                <span class="product-category-badge">{{ product.get_category_display }}</span>
+                                <p class="product-subtitle">{{ product.description|truncatewords:5 }}</p>
+                                <div class="product-footer">
+                                    <p class="product-price">Rs. {{ product.selling_price }}</p>
+                                    <form method="POST" action="{% url 'add_to_cart' product.id %}">
+                                        {% csrf_token %}
+                                        <button class="btn-add-cart" type="submit">
+                                            <span class="material-symbols-outlined">add_shopping_cart</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <p>No products available.</p>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- DETECT SECTION -->
+            <section class="detect-section" id="detect">
+                <div class="detect-dot-bg"></div>
+                <div class="detect-inner">
+                    <div class="detect-layout">
+
+                        <!-- Image col -->
+                        <div class="detect-image-col">
+                            <div class="detect-image-wrap">
+                                <img alt="Smartphone scanning a plant leaf for disease"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDq_rBMx_4NojJgPcvHbODriJnmhDDVqHd8RIfxPsa8Va04df6VtW74M0oqdqEBe-1kV3rBTJ8YsHJ7BuvtpbaQmbZEvfkRCf7Kxy1GrpdxSZYNZflxhmNZGDTZKCwAmAecJffOqSn3cssNV8rXbRphHUVHlgkfKr7G2AMmAuCvBUlqBOf5qLU4CwwqKeWshT5VniQ4AMon7bvIcfCMAF5dG4RI2JcILMrUZ6bu3cwY-vNyVSLc6M9TmAquys_zdm26Pj34IOGmCmo" />
+
+                                <!-- Top badge -->
+                                <div class="detect-badge-top">
+                                    <div class="detect-badge-top-inner">
+                                        <div class="detect-badge-icon">
+                                            <span class="material-symbols-outlined">warning</span>
+                                        </div>
+                                        <div>
+                                            <p class="detect-badge-label">Detected</p>
+                                            <p class="detect-badge-value">Leaf Blight</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Bottom badge -->
+                                <div class="detect-badge-bottom">
+                                    <div class="detect-badge-bottom-inner">
+                                        <span class="material-symbols-outlined">check_circle</span>
+                                        <div>
+                                            <p class="detect-accuracy">98.5% Accuracy</p>
+                                            <p class="detect-ai-label">AI Diagnosis</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Text col -->
+                        <div class="detect-text-col">
+                            <div class="ai-badge">
+                                <span class="ai-badge-dot"></span>
+                                AI Powered
+                            </div>
+                            <h2 class="detect-heading">
+                                Expert Diagnosis <br />
+                                <span class="detect-heading-accent">In Your Pocket</span>
+                            </h2>
+                            <p class="detect-body">
+                                Don't let diseases ruin your harvest. Simply upload a photo of your plant leaf, and our
+                                advanced AI will identify the issue and suggest organic remedies instantly. It's like
+                                having an agronomist on speed dial.
+                            </p>
+                            <div class="detect-cta-row">
+                                <button class="btn-start-detection">
+                                    <span class="material-symbols-outlined">upload_file</span>
+                                    Start Detection
+                                </button>
+                            </div>
+                            <div class="detect-stats">
+                                <div>
+                                    <p class="detect-stat-value">50+</p>
+                                    <p class="detect-stat-label">Diseases</p>
+                                </div>
+                                <div>
+                                    <p class="detect-stat-value">2s</p>
+                                    <p class="detect-stat-label">Analysis Time</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- INFO CARDS -->
+            <section class="info-section">
+                <div class="info-inner">
+                    <div class="info-grid">
+
+                        <!-- Mission card -->
+                        <div class="info-card info-card-green">
+                            <div class="info-card-content">
+                                <div class="info-card-icon info-card-icon-green">
+                                    <span class="material-symbols-outlined">eco</span>
+                                </div>
+                                <h3 class="info-card-title">Our Mission</h3>
+                                <p class="info-card-body">
+                                    We are dedicated to modernizing agriculture through technology. Our mission is to
+                                    provide every farmer with the tools they need to succeed, from quality seeds to AI
+                                    diagnostics.
+                                </p>
+                            </div>
+                            <a class="info-card-link info-card-link-green" href="#">
+                                Read Our Story <span class="material-symbols-outlined">arrow_forward</span>
+                            </a>
+                        </div>
+
+                        <!-- Support card -->
+                        <div class="info-card info-card-gray">
+                            <div class="info-card-content">
+                                <div class="info-card-icon info-card-icon-dark">
+                                    <span class="material-symbols-outlined">support_agent</span>
+                                </div>
+                                <h3 class="info-card-title">Expert Support</h3>
+                                <p class="info-card-body">
+                                    Have questions about a product or need assistance with the app? Our team of
+                                    agricultural experts is here to help you grow better.
+                                </p>
+                            </div>
+                            <a class="info-card-link info-card-link-dark" href="#">
+                                Contact Us <span class="material-symbols-outlined">arrow_forward</span>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        {% include 'footer.html' %}
+
+    </div>
+</body>
+
+</html>

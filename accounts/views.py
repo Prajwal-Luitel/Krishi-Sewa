@@ -5,7 +5,7 @@ from .models import User
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 import datetime
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
 
 def login(request):
@@ -131,3 +131,8 @@ def register(request):
 
 def home(request):
     return render(request, "home.html")
+
+
+def logout(request):
+    auth_logout(request)
+    return redirect('login')
