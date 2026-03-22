@@ -1,10 +1,13 @@
 # Create your views here.
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from .models import Product
 
+
+@login_required
 def product(request):
-    products = Product.objects.all()
+    products = Product.objects.filter(vendor=request.user)
     total_products = products.count()
     in_stock_count = products.filter(stock__gt=0).count()
     out_of_stock_count = products.filter(stock=0).count()
@@ -16,9 +19,13 @@ def product(request):
     }
     return render(request, "product.html", context=context)
 
+
+@login_required
 def sales(request):
     return render(request, "sales.html")
 
+
+@login_required
 def add_product(request):
     if request.method == 'POST':
         try:
@@ -51,7 +58,8 @@ def add_product(request):
                 stock=stock,
                 brand=brand if brand else '',
                 measurement_unit=measurement_unit if measurement_unit else 'kg',
-                image=image if image else None
+                image=image if image else None,
+                vendor=request.user,
             )
             product.save()
             
@@ -65,8 +73,9 @@ def add_product(request):
     return render(request, 'addproduct.html')
 
 
+@login_required
 def edit_product(request, product_id):
-    prod = get_object_or_404(Product, id=product_id)
+    prod = get_object_or_404(Product, id=product_id, vendor=request.user)
     if request.method == 'POST':
         try:
             prod.name = request.POST.get('name')
@@ -90,9 +99,10 @@ def edit_product(request, product_id):
     return render(request, 'addproduct.html', context=context)
 
 
+@login_required
 def delete_product(request, product_id):
     if request.method == 'POST':
-        prod = get_object_or_404(Product, id=product_id)
+        prod = get_object_or_404(Product, id=product_id, vendor=request.user)
         name = prod.name
         prod.delete()
         messages.success(request, f'Product "{name}" deleted successfully!')

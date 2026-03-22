@@ -6,6 +6,7 @@
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/detect.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
 {% endblock %}
 
 
@@ -21,31 +22,30 @@
 
             <div class="card">
                 <h3>Overview</h3>
-                <p>
-                    Plant diseases affect crop productivity and quality.
-                    Early detection using image-based analysis helps farmers
-                    take timely action and reduce losses.
-                </p>
+                <p>{{ summary.overview }}</p>
             </div>
 
             <div class="card">
                 <h3>Symptoms</h3>
                 <ul>
-                    <li>Leaf discoloration</li>
-                    <li>Spots or lesions on leaves</li>
-                    <li>Wilting or drying</li>
-                    <li>Abnormal growth patterns</li>
+                    {% for symptom in summary.symptoms %}
+                    <li>{{ symptom }}</li>
+                    {% endfor %}
                 </ul>
             </div>
 
             <div class="card">
                 <h3>Prevention</h3>
                 <ul>
-                    <li>Use disease-free seeds</li>
-                    <li>Maintain proper irrigation</li>
-                    <li>Apply organic or chemical treatments</li>
-                    <li>Regular crop monitoring</li>
+                    {% for prevention in summary.prevention %}
+                    <li>{{ prevention }}</li>
+                    {% endfor %}
                 </ul>
+            </div>
+
+            <div class="card reason-card">
+                <h3>Why These Products</h3>
+                <p>{{ summary.recommendation_reason }}</p>
             </div>
         </div>
 
@@ -66,18 +66,55 @@
                 <button type="submit" id="detectBtn">Detect</button>
             </form>
 
-            {% if result_image %}
+            {% if error %}
             <div class="result" id="resultBox">
-                <img id="resultImage" src="{{ result_image }}" alt="Detected Image">
-                {% if detections %}
-                    {% with detection=detections|first %}
-                    <h3 id="diseaseName">Disease: {{ detection.class }}</h3>
-                    <p id="confidenceScore">Confidence: {{ detection.confidence }}</p>
-                    {% endwith %}
-                {% else %}
-                    <h3 id="diseaseName">No disease detected</h3>
-                    <p id="confidenceScore"></p>
-                {% endif %}
+                <p id="confidenceScore">{{ error }}</p>
+            </div>
+            {% endif %}
+
+            {% if has_detected %}
+            {% if detections %}
+            <div class="result" id="resultBox">
+                <h3 id="diseaseName">Disease: {{ primary_disease }}</h3>
+                <p id="confidenceScore">Confidence: {{ primary_confidence }}</p>
+            </div>
+            {% else %}
+            <div class="result" id="resultBox">
+                <h3 id="diseaseName">No disease detected</h3>
+            </div>
+            {% endif %}
+
+            <div class="recommendations">
+                <h3>Recommended Products</h3>
+                <div class="recommendation-grid">
+                    {% for product in recommended_products|slice:":3" %}
+                    <div class="recommend-card">
+                        <div class="recommend-image-wrap">
+                            {% if product.image %}
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" />
+                            {% else %}
+                            <img src="https://via.placeholder.com/300x200" alt="No image available" />
+                            {% endif %}
+                        </div>
+                        <div class="recommend-body">
+                            <span class="recommend-brand">{{ product.brand }}</span>
+                            <h4>{{ product.name }}</h4>
+                            <p>{{ product.description|truncatewords:10 }}</p>
+                            <div class="recommend-footer">
+                                <span class="recommend-price">Rs. {{ product.selling_price }}</span>
+                                <form method="POST" action="{% url 'add_to_cart' product.id %}?next={% url 'detect' %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="add-cart-btn" aria-label="Add to cart">
+                                        <span class="material-symbols-outlined">add_shopping_cart</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p>No recommendation available.</p>
+                    {% endfor %}
+                </div>
             </div>
             {% endif %}
         </div>

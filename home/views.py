@@ -3,11 +3,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 from vendor.models import Product
 from home.models import Cart, CartItem
+from home.services.rag import build_disease_rag_output
 from ultralytics import YOLO
 from django.contrib.auth.decorators import login_required
 from PIL import Image
 import io
 import base64
+
+DETECT_SESSION_KEY = 'detect_last_result'
 
 # Load YOLO model - path relative to this file's location
 model_path = os.path.join(os.path.dirname(__file__), 'model', 'best.pt')
@@ -19,9 +22,74 @@ try:
 except Exception:
     pass  # Continue with CPU if CUDA is not available   
 
+
+def _guide_summary():
+    return {
+        'overview': 'Upload a clear leaf image and click Detect. The system identifies likely disease class and then generates a structured summary.',
+        'symptoms': [
+            'Capture one leaf per image for better detection quality',
+            'Use good lighting and avoid blurry photos',
+            'Keep the diseased area visible in the frame',
+            'After detection, review confidence before taking action',
+        ],
+        'prevention': [
+            'Use the recommendations as guidance, not final diagnosis',
+            'Compare symptoms in-field before treatment',
+            'Start with safe and crop-appropriate products',
+            'Consult local experts for severe spread conditions',
+        ],
+        'recommendation_reason': 'Recommendations appear only after you run detection.',
+    }
+
+
+def _no_detection_summary():
+    return {
+        'overview': 'No clear disease was detected in this image. Please upload a clearer close-up leaf image and try again.',
+        'symptoms': [
+            'Focus on one affected leaf in the frame',
+            'Use bright natural light and avoid shadows',
+            'Keep the camera steady to avoid blur',
+            'Capture visible spots, lesions, or discoloration',
+        ],
+        'prevention': [
+            'Continue regular field monitoring',
+            'Isolate suspicious plants early if symptoms appear',
+            'Maintain balanced irrigation and crop hygiene',
+            'Consult an agronomist if symptoms persist',
+        ],
+        'recommendation_reason': 'No recommendations shown because no disease could be confidently detected.',
+    }
+
+
+def _get_products_from_ids(product_ids):
+    if not product_ids:
+        return []
+    products = Product.objects.filter(id__in=product_ids)
+    product_map = {p.id: p for p in products}
+    return [product_map[pid] for pid in product_ids if pid in product_map][:3]
+
+
 @login_required(login_url='login')
 def detect(request):
-    context = {}
+    context = {
+        'summary': _guide_summary(),
+        'recommended_products': [],
+        'has_detected': False,
+    }
+
+    if request.method == 'GET':
+        saved_result = request.session.get(DETECT_SESSION_KEY)
+        if saved_result:
+            context['summary'] = saved_result.get('summary', _guide_summary())
+            context['detections'] = saved_result.get('detections', [])
+            context['primary_disease'] = saved_result.get('primary_disease')
+            context['primary_confidence'] = saved_result.get('primary_confidence')
+            context['original_image'] = saved_result.get('original_image')
+            context['recommended_products'] = _get_products_from_ids(
+                saved_result.get('recommended_product_ids', [])
+            )
+            context['has_detected'] = True
+        return render(request, 'detect.html', context)
     
     if request.method == "POST":
         # Get the uploaded image
@@ -44,17 +112,6 @@ def detect(request):
         # Run YOLO inference
         results = model.predict(img_array, conf=0.25)
         
-        # Get the result image with bounding boxes
-        result_image = results[0].plot()
-        
-        # Convert to PIL Image
-        result_pil = Image.fromarray(result_image)
-        
-        # Convert to base64 for passing to template
-        buffer = io.BytesIO()
-        result_pil.save(buffer, format='PNG')
-        img_str = base64.b64encode(buffer.getvalue()).decode()
-        
         # Extract detection info
         detections = []
         if results[0].boxes is not None:
@@ -66,10 +123,40 @@ def detect(request):
                     'class': class_name,
                     'confidence': f"{confidence*100:.2f}%"
                 })
+
+        detections = sorted(
+            detections,
+            key=lambda d: float(d['confidence'].replace('%', '')),
+            reverse=True,
+        )
+        top_detection = detections[0] if detections else None
+        if top_detection:
+            disease_name = top_detection['class']
+            summary, recommended_products = build_disease_rag_output(disease_name)
+            primary_confidence = top_detection['confidence']
+        else:
+            disease_name = None
+            summary = _no_detection_summary()
+            recommended_products = []
+            primary_confidence = None
         
         # Pass result to template
-        context['result_image'] = f'data:image/png;base64,{img_str}'
         context['detections'] = detections
+        context['summary'] = summary
+        context['recommended_products'] = recommended_products
+        context['primary_disease'] = disease_name
+        context['primary_confidence'] = primary_confidence
+        context['has_detected'] = True
+
+        request.session[DETECT_SESSION_KEY] = {
+            'summary': summary,
+            'detections': detections,
+            'primary_disease': disease_name,
+            'primary_confidence': primary_confidence,
+            'recommended_product_ids': [p.id for p in recommended_products],
+            'original_image': context.get('original_image'),
+        }
+        request.session.modified = True
     
     return render(request, "detect.html", context)
 
@@ -143,6 +230,9 @@ def add_to_cart(request, product_id):
         if not created:
             cart_item.quantity += 1
             cart_item.save()
+    next_url = request.GET.get('next')
+    if next_url:
+        return redirect(next_url)
     return redirect(request.META.get('HTTP_REFERER', 'cart'))
 
 

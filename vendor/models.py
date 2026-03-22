@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 class Product(models.Model):
     CATEGORY_CHOICES = [
@@ -17,6 +18,13 @@ class Product(models.Model):
     image = models.ImageField(upload_to='product_images/', blank=True, null=True)
     brand = models.CharField(max_length=100)
     measurement_unit = models.CharField(max_length=50)
+    vendor = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='vendor_products',
+        null=True,
+        blank=True,
+    )
 
     def __str__(self):
         return self.name
